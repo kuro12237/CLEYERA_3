@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="CLEYERA">
+      <UniqueIdentifier>{1f5a0258-12fb-4a33-999e-316c9a41fa8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Setup">
+      <UniqueIdentifier>{b4e1bbba-605e-49a6-b770-8e31d4e2c065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Setup\Log">
+      <UniqueIdentifier>{d23767cf-4c72-47a1-a0b7-447bf7828484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Setup\Win">
+      <UniqueIdentifier>{fbf39094-dadc-4735-bfcf-ecfd0db1b8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\config">
+      <UniqueIdentifier>{68cbbdd4-b854-45dc-a2cb-9161377711e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Setup\Win\WinSetup.cpp">
+      <Filter>CLEYERA\Setup\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Log\Log.cpp">
+      <Filter>CLEYERA\Setup\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\CLEYERA.cpp">
+      <Filter>CLEYERA</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CLEYERA\Setup\Win\WinSetup.h">
+      <Filter>CLEYERA\Setup\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Log\Log.h">
+      <Filter>CLEYERA\Setup\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\CLEYERA.h">
+      <Filter>CLEYERA</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CLEYERA\config\.editorconfig">
+      <Filter>CLEYERA\config</Filter>
+    </None>
+  </ItemGroup>
+</Project>
