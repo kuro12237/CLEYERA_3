@@ -28,6 +28,9 @@
     <Filter Include="CLEYERA\config">
       <UniqueIdentifier>{68cbbdd4-b854-45dc-a2cb-9161377711e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CLEYERA\Setup\DX">
+      <UniqueIdentifier>{553faec0-e51f-4c38-84c7-a2e6f323e506}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +45,9 @@
     <ClCompile Include="CLEYERA\CLEYERA.cpp">
       <Filter>CLEYERA</Filter>
     </ClCompile>
+    <ClCompile Include="CLEYERA\Setup\DX\DirectXSetup.cpp">
+      <Filter>CLEYERA\Setup\DX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Setup\Win\WinSetup.h">
@@ -52,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\CLEYERA.h">
       <Filter>CLEYERA</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Setup\DX\DirectXSetup.h">
+      <Filter>CLEYERA\Setup\DX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

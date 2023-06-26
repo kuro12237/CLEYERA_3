@@ -27,7 +27,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		}
 
+		Cleyera_->BeginFlame(kClientWidth, kClientHeight);
 
+		Cleyera_->EndFlame();
 	}
 
 	

@@ -135,12 +135,14 @@
   <ItemGroup>
     <ClCompile Include="CLEYERA\CLEYERA.cpp" />
     <ClCompile Include="CLEYERA\Log\Log.cpp" />
+    <ClCompile Include="CLEYERA\Setup\DX\DirectXSetup.cpp" />
     <ClCompile Include="CLEYERA\Setup\Win\WinSetup.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\CLEYERA.h" />
     <ClInclude Include="CLEYERA\Log\Log.h" />
+    <ClInclude Include="CLEYERA\Setup\DX\DirectXSetup.h" />
     <ClInclude Include="CLEYERA\Setup\Win\WinSetup.h" />
   </ItemGroup>
   <ItemGroup>
