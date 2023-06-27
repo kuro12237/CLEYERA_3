@@ -19,6 +19,15 @@
 #include"../Setup/DX/DirectXSetup.h"
 
 
+struct PSOProperty
+{
+	ID3D12PipelineState* GraphicsPipelineState = nullptr;
+	ID3D12RootSignature* rootSignature = nullptr;
+	ID3DBlob* signatureBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
+
+};
+
 struct DXCProperty
 {
 	IDxcUtils* Utils;
@@ -70,6 +79,11 @@ public:
 	void CompileShaders();
 
 
+	void ShapeCreatePSO();
+
+
+
+	void ShaderRelease();
 private:
 
 	ID3D12Device* device=nullptr;
@@ -78,6 +92,9 @@ private:
 	DXCProperty dxc;
 	IDxcIncludeHandler* includeHandler = nullptr;
 	Shaders shader;
+
+	PSOProperty Shape;
+
 };
 
 

@@ -64,7 +64,12 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	///シェーダーコンパイル処理
 	model->CompileShaders();
 
+	//図形描画のパイプライン
+	model->ShapeCreatePSO();
 
+
+
+	model->ShaderRelease();
 }
 
 
