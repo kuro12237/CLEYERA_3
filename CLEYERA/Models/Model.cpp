@@ -348,11 +348,11 @@ void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 world
 
 }
 
-void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty Shape)
+void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty PSO)
 {
 
-	commands.List->SetGraphicsRootSignature(Shape.rootSignature);
-	commands.List->SetPipelineState(Shape.GraphicsPipelineState);//
+	commands.List->SetGraphicsRootSignature(PSO.rootSignature);
+	commands.List->SetPipelineState(PSO.GraphicsPipelineState);//
 
 	commands.List->IASetVertexBuffers(0, 1, &Resource.BufferView);
 

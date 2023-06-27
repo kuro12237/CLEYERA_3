@@ -92,6 +92,12 @@ void Cleyera::EndFlame()
 	DXSetup->EndFlame();
 }
 
+void Cleyera::Deleate()
+{
+
+
+}
+
 ResourcePeroperty  Cleyera::CreateResource()
 {
 	ResourcePeroperty resultResource;

@@ -26,6 +26,9 @@ public:
 
 	void EndFlame();
 		  
+	void Deleate();
+
+
 #pragma region 三角形
 
 	/// <summary>
@@ -34,7 +37,21 @@ public:
 	/// <param name="Resource"></param>
 	ResourcePeroperty CreateResource();
 
+	/// <summary>
+	/// 三角形の表示
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="Color"></param>
+	/// <param name="worldTransform"></param>
+	/// <param name="Resource"></param>
 	void TriangleDraw(Position position,unsigned int Color, Matrix4x4 worldTransform, ResourcePeroperty Resource);
+
+#pragma endregion
+
+#pragma region 四角形
+
+
+
 
 #pragma endregion
 
