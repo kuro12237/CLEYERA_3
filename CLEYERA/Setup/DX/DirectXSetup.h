@@ -128,9 +128,6 @@ public:
 	static D3D12_RECT scissorRectSetting(int32_t kClientWidth, int32_t kClientHeight);
 
 
-
-
-
 	void EndFlame();
 
 #pragma endregion

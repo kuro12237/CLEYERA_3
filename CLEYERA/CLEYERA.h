@@ -26,6 +26,18 @@ public:
 
 	void EndFlame();
 		  
+#pragma region 三角形
+
+	/// <summary>
+	/// 頂点を作る
+	/// </summary>
+	/// <param name="Resource"></param>
+	ResourcePeroperty CreateResource();
+
+	void TriangleDraw(Position position,unsigned int Color, Matrix4x4 worldTransform, ResourcePeroperty Resource);
+
+#pragma endregion
+
 
 #pragma endregion
 

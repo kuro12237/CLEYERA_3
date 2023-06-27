@@ -232,3 +232,141 @@ void Model::ShaderRelease()
 	shader.pixelBlob->Release();
 	shader.vertexBlob->Release();
 }
+
+
+ID3D12Resource* Model::CreateBufferResource(ID3D12Device* device, size_t sizeInbyte)
+{
+	ID3D12Resource* RssultResource;
+	//頂点リソース用のヒープの設定
+	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
+
+	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD; //UploadHeapを使う
+
+	//頂点リソースの設定
+	D3D12_RESOURCE_DESC ResourceDesc{};
+
+
+	//バッファリソース。テクスチャの場合はまた別の設定をする
+	ResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	ResourceDesc.Width = sizeInbyte; //リソースのサイズ。今回はvector4を3頂点分
+
+	//バッファの場合はこれらは1にする決まり
+	ResourceDesc.Height = 1;
+	ResourceDesc.DepthOrArraySize = 1;
+	ResourceDesc.MipLevels = 1;
+	ResourceDesc.SampleDesc.Count = 1;
+
+	//バッファの場合はこれにする決まり
+	ResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	HRESULT hr;
+	hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE,
+		&ResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&RssultResource));
+	assert(SUCCEEDED(hr));
+
+	return RssultResource;
+}
+
+D3D12_VERTEX_BUFFER_VIEW Model::CreateBufferView(size_t sizeInbyte, ID3D12Resource* Resource)
+{
+	D3D12_VERTEX_BUFFER_VIEW resultBufferView;
+
+	resultBufferView.BufferLocation = Resource->GetGPUVirtualAddress();
+
+	//使用するリソースのサイズは頂点3つ分のサイズ
+	resultBufferView.SizeInBytes = UINT(sizeInbyte);
+
+	//1頂点あたりのサイズ
+	resultBufferView.StrideInBytes = UINT(sizeInbyte / 3);
+	return resultBufferView;
+
+}
+
+ResourcePeroperty  Model::CreateResource()
+{
+	ResourcePeroperty resultResource;
+
+	resultResource.Vertex = CreateBufferResource(device, sizeof(Vector4) * 3);
+	resultResource.Material = CreateBufferResource(device, sizeof(Vector4));
+	resultResource.wvpResource = CreateBufferResource(device, sizeof(Matrix4x4));
+	resultResource.BufferView = CreateBufferView(sizeof(Vector4) * 3,resultResource.Vertex);
+   
+	return resultResource;
+
+}
+
+Vector4 Model::ColorAdapter(unsigned int color)
+{
+	Vector4 ResultColor = {
+
+	   ((color >> 24) & 0xFF) / 255.0f, // 赤
+
+	   ((color >> 16) & 0xFF) / 255.0f, // 緑
+
+	   ((color >> 8) & 0xFF) / 255.0f,  // 青
+
+	   ((color) & 0xFF) / 255.0f //透明度
+
+	};
+
+	return ResultColor;
+
+}
+
+void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform,ResourcePeroperty Resource)
+{
+	Vector4* vertexData = nullptr;
+	Vector4* MaterialData = nullptr;
+	Matrix4x4* wvpData = nullptr;
+	//書き込むためのアドレスを取得
+	Resource.Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	Resource.Material->Map(0, nullptr, reinterpret_cast<void**>(&MaterialData));
+	Resource.wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
+
+	
+
+	//座標
+	//左下
+	vertexData[0] = { position.left.x,position.left.y,position.left.z , 1.0f};
+
+	//上
+	vertexData[1] = { position.top.x,position.top.y,position.top.z,1.0f};
+
+	//右上
+	vertexData[2] = { position.right.x,position.right.y,position.right.z,1.0f};
+
+	//マテリアル
+	Vector4 colorData = ColorAdapter(ColorCode);
+
+	*MaterialData = colorData;
+
+	//行列の変換
+	
+	*wvpData = worldTransform;
+
+
+	ShapeDrawCommands(commands,Resource,Shape);
+
+}
+
+void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty Shape)
+{
+
+	commands.List->SetGraphicsRootSignature(Shape.rootSignature);
+	commands.List->SetPipelineState(Shape.GraphicsPipelineState);//
+
+	commands.List->IASetVertexBuffers(0, 1, &Resource.BufferView);
+
+	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
+	commands.List->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//マテリアルCBufferの場所を設定
+	commands.List->SetGraphicsRootConstantBufferView(0, Resource.Material->GetGPUVirtualAddress());
+
+	//wvp用のCBufferの場所を設定
+	commands.List->SetGraphicsRootConstantBufferView(1, Resource.wvpResource->GetGPUVirtualAddress());
+
+	//描画(DrawCall/ドローコール)。
+	commands.List->DrawInstanced(3, 1, 0, 0);
+
+
+}

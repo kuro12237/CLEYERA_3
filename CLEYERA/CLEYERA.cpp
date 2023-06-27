@@ -92,5 +92,18 @@ void Cleyera::EndFlame()
 	DXSetup->EndFlame();
 }
 
+ResourcePeroperty  Cleyera::CreateResource()
+{
+	ResourcePeroperty resultResource;
+	resultResource=model->CreateResource();
+	return resultResource;
+}
+
+void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ResourcePeroperty Resource)
+{
+	model->ShapeDraw(position, ColorCode,worldTransform, Resource);
+
+}
+
 
 

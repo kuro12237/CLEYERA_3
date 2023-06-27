@@ -145,6 +145,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="CLEYERA\CLEYERA.cpp" />
     <ClCompile Include="CLEYERA\Log\Log.cpp" />
+    <ClCompile Include="CLEYERA\Matrix\MatrixTransform.cpp" />
     <ClCompile Include="CLEYERA\Models\Model.cpp" />
     <ClCompile Include="CLEYERA\Setup\DX\DirectXSetup.cpp" />
     <ClCompile Include="CLEYERA\Setup\Win\WinSetup.cpp" />
@@ -153,9 +154,16 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="CLEYERA\CLEYERA.h" />
     <ClInclude Include="CLEYERA\Log\Log.h" />
+    <ClInclude Include="CLEYERA\Matrix\Matrix2x2.h" />
+    <ClInclude Include="CLEYERA\Matrix\Matrix3x3.h" />
+    <ClInclude Include="CLEYERA\Matrix\Matrix4x4.h" />
+    <ClInclude Include="CLEYERA\Matrix\MatrixTransform.h" />
     <ClInclude Include="CLEYERA\Models\Model.h" />
     <ClInclude Include="CLEYERA\Setup\DX\DirectXSetup.h" />
     <ClInclude Include="CLEYERA\Setup\Win\WinSetup.h" />
+    <ClInclude Include="CLEYERA\Vector\Vector2.h" />
+    <ClInclude Include="CLEYERA\Vector\Vector3.h" />
+    <ClInclude Include="CLEYERA\Vector\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\config\.editorconfig" />
