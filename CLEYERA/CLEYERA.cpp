@@ -13,7 +13,7 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 
 	WinSetup = new WindowsSetup();
 	DXSetup = new DirectXSetup();
-	
+	model = new Model();
 
 	//WinSetupの初期化
 	
@@ -50,8 +50,23 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//フェンスの生成
 	DXSetup->CreateFence();
 
+	///モデルの初期化
+
+	//DXでつくったものを転送
+	model->SetDevice(DXSetup->GetDevice());
+	model->SetCommands(DXSetup->GetCommands());
+
+	//DXCの初期化
+	model->dxcInitialize();
+	//Compileするための対応処理
+	model->InitializeDfIncludeHandler();
+	
+	///シェーダーコンパイル処理
+	model->CompileShaders();
+
 
 }
+
 
 void Cleyera::WinMSG(MSG msg)
 {

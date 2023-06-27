@@ -2,7 +2,7 @@
 #include<format>
 #include"Setup/Win/WinSetup.h"
 #include"Setup/DX/DirectXSetup.h"
-
+#include"Models/Model.h"
 class Cleyera
 {
 public:
@@ -11,8 +11,6 @@ public:
 
 
 	void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
-
-
 
 #pragma region ループする必要がある処理
 
@@ -37,7 +35,7 @@ private:
 
 	WindowsSetup* WinSetup = nullptr;
 	DirectXSetup* DXSetup = nullptr;
-
+	Model* model = nullptr;
 
 };
 

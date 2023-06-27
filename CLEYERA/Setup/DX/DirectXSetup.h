@@ -108,6 +108,11 @@ public:
 	void CreateFence();
 
 
+	ID3D12Device* GetDevice() { return device; }
+	Commands GetCommands() { return commands; }
+
+#pragma region ÉãÅ[Év
+
 	void BeginFlame();
 
 	void ScissorViewCommand(const int32_t kClientWidth, const int32_t kClientHeight);

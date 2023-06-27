@@ -31,6 +31,12 @@
     <Filter Include="CLEYERA\Setup\DX">
       <UniqueIdentifier>{553faec0-e51f-4c38-84c7-a2e6f323e506}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CLEYERA\Models">
+      <UniqueIdentifier>{3e42a95f-aee4-4ec8-a147-6834e9d5589f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{af344174-4e7e-4077-aff5-96592e067151}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +54,9 @@
     <ClCompile Include="CLEYERA\Setup\DX\DirectXSetup.cpp">
       <Filter>CLEYERA\Setup\DX</Filter>
     </ClCompile>
+    <ClCompile Include="CLEYERA\Models\Model.cpp">
+      <Filter>CLEYERA\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Setup\Win\WinSetup.h">
@@ -62,10 +71,21 @@
     <ClInclude Include="CLEYERA\Setup\DX\DirectXSetup.h">
       <Filter>CLEYERA\Setup\DX</Filter>
     </ClInclude>
+    <ClInclude Include="CLEYERA\Models\Model.h">
+      <Filter>CLEYERA\Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\config\.editorconfig">
       <Filter>CLEYERA\config</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\Object3d.PS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Object3d.VS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
