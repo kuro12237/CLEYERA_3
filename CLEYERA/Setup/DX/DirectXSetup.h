@@ -111,6 +111,31 @@ public:
 	ID3D12Device* GetDevice() { return device; }
 	Commands GetCommands() { return commands; }
 
+
+	/// <summary>
+	/// DirectXの解放
+	/// </summary>
+	void Release();
+
+	
+
+
+#pragma region Releaseに書く処理
+
+
+	static void FeanceReleace(ID3D12Fence* fence, HANDLE fenceEvent);
+
+	static void DescripterRelease(RTV rtv, ID3D12DescriptorHeap* srvDescriptorHeap);
+	
+	static void SwapChainRelease(SwapChain swapChain);
+
+	static void CommandsRelease(Commands commands);
+#pragma endregion 
+
+	void ReleaseChack();
+
+
+
 #pragma region ループ
 
 	void BeginFlame();
@@ -125,6 +150,9 @@ public:
 	/// <returns></returns>
 	static D3D12_VIEWPORT viewportSetting(int32_t kClientWidth, int32_t kClientHeight);
 
+	/// <summary>
+	/// シザーの設定
+	/// </summary>
 	static D3D12_RECT scissorRectSetting(int32_t kClientWidth, int32_t kClientHeight);
 
 

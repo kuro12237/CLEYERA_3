@@ -109,6 +109,10 @@ public:
 	/// </summary>
 	void ShapeCreatePSO();
 
+
+
+
+
 	/// <summary>
 	/// コンパイルしたシェーダーのリリース
 	/// </summary>
@@ -116,8 +120,20 @@ public:
 
 
 
+	/// <summary>
+	/// PSOなどのリリース
+	/// </summary>
+	void Release();
+
 
 #pragma endregion
+
+	/// <summary>
+	/// 色変換
+	/// </summary>
+	/// <param name="color"></param>
+	/// <returns></returns>
+	Vector4 ColorAdapter(unsigned int color);
 
 #pragma region 三角形
 
@@ -144,11 +160,11 @@ public:
 	ResourcePeroperty  CreateResource();
 
 	/// <summary>
-	/// 色変換
-	/// </summary>
-	/// <param name="color"></param>
-	/// <returns></returns>
-	Vector4 ColorAdapter(unsigned int color);
+    /// Commands
+    /// </summary>
+    /// <param name="commands"></param>
+	static void ShapeDrawCommands(Commands commands, ResourcePeroperty Resource, PSOProperty Shape);
+
 
 	/// <summary>
 	/// 表示
@@ -158,12 +174,8 @@ public:
 	/// <param name="Resource"></param>
 	void ShapeDraw(Position position, unsigned int Color, Matrix4x4 matrix,ResourcePeroperty Resource);
 
-	/// <summary>
-	/// Commands
-	/// </summary>
-	/// <param name="commands"></param>
-	static void ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty Shape);
 
+	void ResourceDeleate(ResourcePeroperty Resource);
 
 #pragma endregion
 

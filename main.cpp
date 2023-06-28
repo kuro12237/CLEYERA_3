@@ -32,6 +32,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	triangle[0].Resources = Cleyera_->CreateResource();
 	triangle[0].Color = 0xff0000ff;
 	triangle[0].matrix = matrixTransform->Identity();
+	
 	MSG msg{};
 
 	
@@ -55,7 +56,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Cleyera_->EndFlame();
 	}
 
+	///
+	/// }Œ`‚Ì‰ğ•úˆ—
+	/// 
 	
+	Cleyera_->TriangleResourceRelease(triangle[0].Resources);
+
+	///
+	///
+	/// 
+	
+
+	Cleyera_->Deleate();
+
 	return 0;
 
 

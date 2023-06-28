@@ -38,6 +38,11 @@ public:
 	ResourcePeroperty CreateResource();
 
 	/// <summary>
+	/// 三角形のResourceの解放
+	/// </summary>
+	void TriangleResourceRelease(ResourcePeroperty Resource);
+
+	/// <summary>
 	/// 三角形の表示
 	/// </summary>
 	/// <param name="position"></param>

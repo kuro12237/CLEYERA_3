@@ -234,6 +234,20 @@ void Model::ShaderRelease()
 }
 
 
+void Model::Release()
+{
+	Shape.GraphicsPipelineState->Release();
+	Shape.signatureBlob->Release();
+	if (Shape.errorBlob)
+	{
+		Shape.errorBlob->Release();
+	}
+	Shape.rootSignature->Release();
+
+
+
+}
+
 ID3D12Resource* Model::CreateBufferResource(ID3D12Device* device, size_t sizeInbyte)
 {
 	ID3D12Resource* RssultResource;
@@ -368,5 +382,14 @@ void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOP
 	//描画(DrawCall/ドローコール)。
 	commands.List->DrawInstanced(3, 1, 0, 0);
 
+
+}
+
+void Model::ResourceDeleate(ResourcePeroperty Resource)
+{
+
+	Resource.Vertex->Release();
+	Resource.Material->Release();
+	Resource.wvpResource->Release();
 
 }

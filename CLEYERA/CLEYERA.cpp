@@ -94,7 +94,10 @@ void Cleyera::EndFlame()
 
 void Cleyera::Deleate()
 {
-
+	DXSetup->Release();
+	model->Release();
+	WinSetup->Deleate();
+	DXSetup->ReleaseChack();
 
 }
 
@@ -103,6 +106,13 @@ ResourcePeroperty  Cleyera::CreateResource()
 	ResourcePeroperty resultResource;
 	resultResource=model->CreateResource();
 	return resultResource;
+}
+
+void Cleyera::TriangleResourceRelease(ResourcePeroperty Resource)
+{
+	model->ResourceDeleate(Resource);
+
+
 }
 
 void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ResourcePeroperty Resource)

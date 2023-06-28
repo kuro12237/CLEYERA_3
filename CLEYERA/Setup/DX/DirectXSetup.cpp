@@ -262,6 +262,9 @@ void DirectXSetup::CreateFence()
 
 }
 
+
+
+
 void DirectXSetup::BeginFlame()
 {
 	//書き込むスワップチェーンのindexをとる
@@ -345,6 +348,62 @@ void DirectXSetup::ScissorViewCommand(const int32_t kClientWidth, const int32_t 
 	commands.List->RSSetScissorRects(1, &scissorRect);
 	//commands.List->SetGraphicsRootSignature(rootSignature);
 	//commands.List->SetPipelineState(graphicsPipelineState);//
+}
+
+
+void DirectXSetup::FeanceReleace(ID3D12Fence* fence, HANDLE fenceEvent)
+{
+	CloseHandle(fenceEvent);
+	fence->Release();
+}
+
+void DirectXSetup::DescripterRelease(RTV rtv, ID3D12DescriptorHeap* srvDescriptorHeap)
+{
+
+	rtv.DescritorHeap->Release();
+	srvDescriptorHeap->Release();
+}
+
+void DirectXSetup::SwapChainRelease(SwapChain swapChain)
+{
+	swapChain.Resource[0]->Release();
+	swapChain.Resource[1]->Release();
+	swapChain.swapChain->Release();
+
+}
+
+void DirectXSetup::CommandsRelease(Commands commands)
+{
+	commands.List->Release();
+	commands.Allocator->Release();
+	commands.Queue->Release();
+}
+
+void DirectXSetup::Release()
+{
+	FeanceReleace(fence, fenceEvent);
+	DescripterRelease(rtv, srvDescriptorHeap);
+	SwapChainRelease(swapChain);
+	CommandsRelease(commands);
+	device->Release();
+	useAdapter->Release();
+	dxgiFactory->Release();
+
+	debugController->Release();
+}
+
+void DirectXSetup::ReleaseChack()
+{
+	IDXGIDebug1* debug;
+	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug))))
+	{
+		debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
+		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
+		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
+		debug->Release();
+	}
+
+
 }
 
 D3D12_VIEWPORT DirectXSetup::viewportSetting(int32_t kClientWidth, int32_t kClientHeight)
