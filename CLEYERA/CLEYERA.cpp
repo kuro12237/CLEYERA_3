@@ -14,7 +14,7 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	WinSetup = new WindowsSetup();
 	DXSetup = new DirectXSetup();
 	model = new Model();
-
+	texManager = new TexManager();
 	//WinSetupの初期化
 	
 
@@ -50,6 +50,9 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//フェンスの生成
 	DXSetup->CreateFence();
 
+
+	texManager->Initialize();
+
 	///モデルの初期化
 
 	//DXでつくったものを転送
@@ -61,15 +64,19 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//Compileするための対応処理
 	model->InitializeDfIncludeHandler();
 	
+
+
 	///シェーダーコンパイル処理
 	model->CompileShaders();
 
 	//図形描画のパイプライン
 	model->ShapeCreatePSO();
 
-
+	model->SpriteCreatePSO();
 
 	model->ShaderRelease();
+
+
 }
 
 
@@ -94,23 +101,34 @@ void Cleyera::EndFlame()
 
 void Cleyera::Deleate()
 {
+	texManager->Finalize();
 	DXSetup->Release();
 	model->Release();
 	WinSetup->Deleate();
 	DXSetup->ReleaseChack();
 
+
+}
+
+texResourceProperty Cleyera::LoadTex(const std::string& filePath)
+{
+	texResourceProperty tex;
+
+	tex=texManager->LoadTexture(filePath, DXSetup);
+	
+	return tex;
 }
 
 ResourcePeroperty  Cleyera::CreateResource()
 {
 	ResourcePeroperty resultResource;
-	resultResource=model->CreateResource();
+	resultResource=model->CreateShapeResource();
 	return resultResource;
 }
 
 void Cleyera::TriangleResourceRelease(ResourcePeroperty Resource)
 {
-	model->ResourceDeleate(Resource);
+	model->ShapeResourceDeleate(Resource);
 
 
 }

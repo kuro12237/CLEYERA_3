@@ -158,6 +158,8 @@ public:
 
 	void EndFlame();
 
+	ID3D12DescriptorHeap* GetSrvDescripterHeap() { return srvDescriptorHeap; }
+
 #pragma endregion
 
 private:

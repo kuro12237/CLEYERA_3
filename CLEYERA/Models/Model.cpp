@@ -113,13 +113,22 @@ IDxcBlob* Model::CompilerShader(
 void Model::CompileShaders()
 {
 	//Shaderをコンパイルする
-	shader.vertexBlob = CompilerShader(L"Shader/Object3d.VS.hlsl",
+	shader.shape.vertexBlob = CompilerShader(L"Shader/ShapeObject3d.VS.hlsl",
 		L"vs_6_0", dxc.Utils, dxc.Compiler, includeHandler);
-	assert(shader.vertexBlob != nullptr);
+	assert(shader.shape.vertexBlob != nullptr);
 
-	shader.pixelBlob = CompilerShader(L"Shader/Object3d.PS.hlsl",
+	shader.shape.pixelBlob = CompilerShader(L"Shader/ShapeObject3d.PS.hlsl",
 		L"ps_6_0", dxc.Utils, dxc.Compiler, includeHandler);
-	assert(shader.pixelBlob != nullptr);
+	assert(shader.shape.pixelBlob != nullptr);
+
+	shader.sprite.vertexBlob = CompilerShader(L"shader/SpriteObject3d.VS.hlsl",
+		L"vs_6_0", dxc.Utils, dxc.Compiler, includeHandler);
+	assert(shader.sprite.vertexBlob);
+
+	shader.sprite.pixelBlob = CompilerShader(L"shader/SpriteObject3d.PS.hlsl",
+		L"ps_6_0", dxc.Utils, dxc.Compiler, includeHandler);
+	assert(shader.sprite.pixelBlob);
+
 }
 
 void Model::ShapeCreatePSO()
@@ -199,10 +208,10 @@ void Model::ShapeCreatePSO()
 
 	graphicsPipelineStateDesc.pRootSignature = Shape.rootSignature; //RootSignature
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc; //InputLayout
-	graphicsPipelineStateDesc.VS = { shader.vertexBlob->GetBufferPointer(),
-	shader.vertexBlob->GetBufferSize() }; //VertexShader
-	graphicsPipelineStateDesc.PS = { shader.pixelBlob->GetBufferPointer(),
-	shader.pixelBlob->GetBufferSize() }; //PixeShader
+	graphicsPipelineStateDesc.VS = { shader.shape.vertexBlob->GetBufferPointer(),
+	shader.shape.vertexBlob->GetBufferSize() }; //VertexShader
+	graphicsPipelineStateDesc.PS = { shader.shape.pixelBlob->GetBufferPointer(),
+	shader.shape.pixelBlob->GetBufferSize() }; //PixeShader
 	graphicsPipelineStateDesc.BlendState = blendDesc; //BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; //RasterizerState
 
@@ -227,10 +236,160 @@ void Model::ShapeCreatePSO()
 
 }
 
+void Model::SpriteCreatePSO()
+{
+
+	//RootSignature作成
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+
+	//descriptionRootSignature = CreateDescriptRootSignature();
+	descriptionRootSignature.Flags =
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	//Material設定
+	D3D12_ROOT_PARAMETER rootParameters[3] = {};
+	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[0].Descriptor.ShaderRegister = 0;
+
+	//VertexのTransform
+	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParameters[1].Descriptor.ShaderRegister = 0;
+
+
+	//DescriptorRanged
+	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
+	descriptorRange[0].BaseShaderRegister = 0;
+	descriptorRange[0].NumDescriptors = 1;
+	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	//rootPrameterに入れる
+	rootParameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+
+	//Samplerの設定
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0].Filter = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+
+	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+	staticSamplers[0].ShaderRegister = 0;
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+	descriptionRootSignature.pStaticSamplers = staticSamplers;
+	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
+
+
+
+
+	descriptionRootSignature.pParameters = rootParameters;
+	descriptionRootSignature.NumParameters = _countof(rootParameters);
+
+	//シリアライズしてバイナリにする
+
+	HRESULT hr = D3D12SerializeRootSignature(&descriptionRootSignature,
+		D3D_ROOT_SIGNATURE_VERSION_1, &Sprite.signatureBlob, &Sprite.errorBlob);
+	if (FAILED(hr))
+	{
+		Log(reinterpret_cast<char*>(Sprite.errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+
+	//バイナリを元に生成
+
+	hr = device->CreateRootSignature(0, Sprite.signatureBlob->GetBufferPointer(),
+		Sprite.signatureBlob->GetBufferSize(), IID_PPV_ARGS(&Sprite.rootSignature));
+	assert(SUCCEEDED(hr));
+
+
+
+
+	//InputLayoutの設定
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[2] = {};
+	inputElementDescs[0].SemanticName = "POSITION";
+	inputElementDescs[0].SemanticIndex = 0;
+	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementDescs[1].SemanticName = "TEXCOORD";
+	inputElementDescs[1].SemanticIndex = 0;
+	inputElementDescs[1].Format = DXGI_FORMAT_R32G32_FLOAT;
+	inputElementDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+
+
+
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
+	inputLayoutDesc.pInputElementDescs = inputElementDescs;
+	inputLayoutDesc.NumElements = _countof(inputElementDescs);
+
+
+	//BlendStateの設定を行う
+	D3D12_BLEND_DESC blendDesc{};
+	//すべての色要素を書き込む
+	blendDesc.RenderTarget[0].RenderTargetWriteMask =
+		D3D12_COLOR_WRITE_ENABLE_ALL;
+
+
+	//RasterrizerStateぼ設定
+	D3D12_RASTERIZER_DESC rasterizerDesc{};
+
+	//裏面（時計回り）を表示しない
+	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
+	//三角形の中を塗りつぶす
+	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
+
+
+	//PSOの生成
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
+
+	graphicsPipelineStateDesc.pRootSignature = Sprite.rootSignature; //RootSignature
+	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc; //InputLayout
+	graphicsPipelineStateDesc.VS = { shader.sprite.vertexBlob->GetBufferPointer(),
+	shader.sprite.vertexBlob->GetBufferSize() }; //VertexShader
+	graphicsPipelineStateDesc.PS = { shader.sprite.pixelBlob->GetBufferPointer(),
+	shader.sprite.pixelBlob->GetBufferSize() }; //PixeShader
+	graphicsPipelineStateDesc.BlendState = blendDesc; //BlendState
+	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; //RasterizerState
+
+
+	//書き込むRTVの情報
+	graphicsPipelineStateDesc.NumRenderTargets = 1;
+	graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+
+	//利用するトポロジ(形状)のタイプ。三角形
+	graphicsPipelineStateDesc.PrimitiveTopologyType =
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	//どのように画面に色を打ち込むかの設定(気にしなくて良い)
+	graphicsPipelineStateDesc.SampleDesc.Count = 1;
+	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+		IID_PPV_ARGS(&Sprite.GraphicsPipelineState));
+	assert(SUCCEEDED(hr));
+
+
+
+}
+
+
+
 void Model::ShaderRelease()
 {
-	shader.pixelBlob->Release();
-	shader.vertexBlob->Release();
+	shader.shape.pixelBlob->Release();
+	shader.shape.vertexBlob->Release();
+
+	shader.sprite.pixelBlob->Release();
+	shader.sprite.vertexBlob->Release();
 }
 
 
@@ -244,8 +403,15 @@ void Model::Release()
 	}
 	Shape.rootSignature->Release();
 
-
-
+	
+	Sprite.GraphicsPipelineState->Release();
+	Sprite.signatureBlob->Release();
+	if (Sprite.errorBlob)
+	{
+		Sprite.errorBlob->Release();
+	}
+	Sprite.rootSignature->Release();
+	
 }
 
 ID3D12Resource* Model::CreateBufferResource(ID3D12Device* device, size_t sizeInbyte)
@@ -295,7 +461,7 @@ D3D12_VERTEX_BUFFER_VIEW Model::CreateBufferView(size_t sizeInbyte, ID3D12Resour
 
 }
 
-ResourcePeroperty  Model::CreateResource()
+ResourcePeroperty  Model::CreateShapeResource()
 {
 	ResourcePeroperty resultResource;
 
@@ -308,7 +474,7 @@ ResourcePeroperty  Model::CreateResource()
 
 }
 
-Vector4 Model::ColorAdapter(unsigned int color)
+Vector4 Model::ColorCodeAdapter(unsigned int color)
 {
 	Vector4 ResultColor = {
 
@@ -349,21 +515,21 @@ void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 world
 	vertexData[2] = { position.right.x,position.right.y,position.right.z,1.0f};
 
 	//マテリアル
-	Vector4 colorData = ColorAdapter(ColorCode);
+	Vector4 colorData = ColorCodeAdapter(ColorCode);
 
 	*MaterialData = colorData;
 
 	//行列の変換
 	
 	*wvpData = worldTransform;
-
-
+	
 	ShapeDrawCommands(commands,Resource,Shape);
 
 }
 
 void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty PSO)
 {
+
 
 	commands.List->SetGraphicsRootSignature(PSO.rootSignature);
 	commands.List->SetPipelineState(PSO.GraphicsPipelineState);//
@@ -385,11 +551,11 @@ void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOP
 
 }
 
-void Model::ResourceDeleate(ResourcePeroperty Resource)
+void Model::ShapeResourceDeleate(ResourcePeroperty Resource)
 {
 
 	Resource.Vertex->Release();
 	Resource.Material->Release();
 	Resource.wvpResource->Release();
-
+	
 }

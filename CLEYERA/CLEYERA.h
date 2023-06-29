@@ -3,6 +3,8 @@
 #include"Setup/Win/WinSetup.h"
 #include"Setup/DX/DirectXSetup.h"
 #include"Models/Model.h"
+#include"TexManager/TexManager.h"
+
 class Cleyera
 {
 public:
@@ -27,6 +29,12 @@ public:
 	void EndFlame();
 		  
 	void Deleate();
+
+#pragma region テクスチャー
+
+	texResourceProperty LoadTex(const std::string& filePath);
+
+#pragma endregion
 
 
 #pragma region 三角形
@@ -70,6 +78,8 @@ private:
 	WindowsSetup* WinSetup = nullptr;
 	DirectXSetup* DXSetup = nullptr;
 	Model* model = nullptr;
+	TexManager* texManager = nullptr;
+
 
 };
 

@@ -39,11 +39,17 @@ struct DXCProperty
 
 };
 
-
-struct Shaders
+struct  Mode
 {
 	IDxcBlob* vertexBlob;
 	IDxcBlob* pixelBlob;
+};
+
+struct Shaders
+{
+	Mode shape;
+	Mode sprite;
+
 };
 
 
@@ -109,7 +115,10 @@ public:
 	/// </summary>
 	void ShapeCreatePSO();
 
-
+	/// <summary>
+	/// 画像用のPSO
+	/// </summary>
+	void SpriteCreatePSO();
 
 
 
@@ -133,18 +142,16 @@ public:
 	/// </summary>
 	/// <param name="color"></param>
 	/// <returns></returns>
-	Vector4 ColorAdapter(unsigned int color);
-
-#pragma region 三角形
+	Vector4 ColorCodeAdapter(unsigned int color);
 
 	/// <summary>
-	/// Resourceを作成
-	/// </summary>
-	/// <param name="device"></param>
-	/// <param name="sizeInbyte"></param>
-	/// <returns></returns>
+    /// Resourceを作成
+    /// </summary>
+    /// <param name="device"></param>
+    /// <param name="sizeInbyte"></param>
+    /// <returns></returns>
 	static ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInbyte);
-	
+
 	/// <summary>
 	/// BufferViewを作成
 	/// </summary>
@@ -153,11 +160,14 @@ public:
 	/// <returns></returns>
 	static D3D12_VERTEX_BUFFER_VIEW CreateBufferView(size_t sizeInbyte, ID3D12Resource* Resource);
 
+#pragma region 三角形
+
+
 	/// <summary>
 	/// Resource生成
 	/// </summary>
 	/// <returns></returns>
-	ResourcePeroperty  CreateResource();
+	ResourcePeroperty  CreateShapeResource();
 
 	/// <summary>
     /// Commands
@@ -175,11 +185,17 @@ public:
 	void ShapeDraw(Position position, unsigned int Color, Matrix4x4 matrix,ResourcePeroperty Resource);
 
 
-	void ResourceDeleate(ResourcePeroperty Resource);
+	void ShapeResourceDeleate(ResourcePeroperty Resource);
 
 #pragma endregion
 
+#pragma region 画像表示
 
+
+	void SpriteDraw();
+
+	
+#pragma endregion
 
 
 private:
@@ -188,10 +204,13 @@ private:
 	Commands commands;
 
 	DXCProperty dxc;
+
 	IDxcIncludeHandler* includeHandler = nullptr;
 	Shaders shader;
 
 	PSOProperty Shape;
+	PSOProperty Sprite;
+
 
 	
 };

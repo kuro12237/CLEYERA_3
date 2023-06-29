@@ -1,6 +1,6 @@
 #include"CLEYERA/CLEYERA.h"
 
-
+#define TriangleMax 2
 
 struct Triangle
 {
@@ -9,7 +9,6 @@ struct Triangle
 	unsigned int Color;
 	Matrix4x4 matrix;
 };
-
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -26,13 +25,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 	Cleyera_->Initialize(kClientWidth,kClientHeight);
 
-	Triangle triangle[1];
+	Triangle triangle[TriangleMax];
 	triangle[0].position =
 	{ {0.0f,0.5,0.0f},{-0.5f,0.0f,0.0f},{0.5f,0.0f,0.0f } };
 	triangle[0].Resources = Cleyera_->CreateResource();
 	triangle[0].Color = 0xff0000ff;
 	triangle[0].matrix = matrixTransform->Identity();
 	
+	triangle[1].position =
+	{ {-0.5f,0.5,0.0f},{-1.0f,0.0f,0.0f},{0.0f,0.0f,0.0f } };
+	triangle[1].Resources = Cleyera_->CreateResource();
+	triangle[1].Color = 0xff0000ff;
+	triangle[1].matrix = matrixTransform->Identity();
+
+
+
+	texResourceProperty tex;
+
+	tex = Cleyera_->LoadTex("CLEYERA/DefaultResources/uvChecker.png");
+
 	MSG msg{};
 
 	
@@ -48,10 +59,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		Cleyera_->BeginFlame(kClientWidth, kClientHeight);
 		
+		for (int i = 0; i < TriangleMax; i++)
+		{
+		
 
-		Cleyera_->TriangleDraw(triangle[0].position,
-			triangle[0].Color, triangle[0].matrix,
-			triangle[0].Resources);
+
+			Cleyera_->TriangleDraw(triangle[i].position,
+				triangle[i].Color, triangle[i].matrix,
+				triangle[i].Resources);
+		}
 
 		Cleyera_->EndFlame();
 	}
@@ -60,8 +76,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	/// }Œ`‚Ì‰ð•úˆ—
 	/// 
 	
-	Cleyera_->TriangleResourceRelease(triangle[0].Resources);
-
+	for (int i = 0; i < TriangleMax; i++)
+	{
+		Cleyera_->TriangleResourceRelease(triangle[i].Resources);
+	}
 	///
 	///
 	/// 
