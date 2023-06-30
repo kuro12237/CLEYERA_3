@@ -59,64 +59,64 @@ public:
 	~DirectXSetup();
 
 
-
+	static DirectXSetup* GetInstance();
 
 #pragma region Initializeで使う関数
 
 	/// <summary>
 	/// DXGIファクトリーの作成
 	/// </summary>
-	void CreateDXGIFactorye();
+	static void CreateDXGIFactorye();
 
 	/// <summary>
 	/// デバイスの作成
 	/// </summary>
-	void CreateDevice();
+	static void CreateDevice();
 
 	/// <summary>
 	/// windows11でのDXGIデバッグレイヤーとDX12デバッグレイヤーの相互バグによるエラーチェック
 	/// </summary>
-	void debugErrorInfoQueue();
+	static void debugErrorInfoQueue();
 
 	/// <summary>
     /// コマンドリストの生成
     /// </summary>
-	void CreateCommands();
+	static void CreateCommands();
 
 	/// <summary>
     /// スワップチェーンの設定
     /// </summary>
-	void CreateSwapChain(const int32_t Width, const int32_t Height, HWND hwnd_);
+	static void CreateSwapChain(const int32_t Width, const int32_t Height, HWND hwnd_);
 
 
-	ID3D12DescriptorHeap* CreateDescriptorHeap( D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
+	static ID3D12DescriptorHeap* CreateDescriptorHeap( D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
-	void CreatertvDescritorHeap();
+	static void CreatertvDescritorHeap();
 
 	/// <summary>
 	///  スワップチェーンの生成
 	/// </summary>
-	void CreateSwapChainResorce();
+	static void CreateSwapChainResorce();
 
 	/// <summary>
 	/// RTVの生成
 	/// </summary>
-	void SettingandCreateRTV();
+	static void SettingandCreateRTV();
 
 	/// <summary>
 	/// フェンスの生成
 	/// </summary>
-	void CreateFence();
+	static void CreateFence();
 
 
-	ID3D12Device* GetDevice() { return device; }
-	Commands GetCommands() { return commands; }
+	 ID3D12Device* GetDevice() { return device; }
+	 Commands GetCommands() { return commands; }
 
-	DXGI_SWAP_CHAIN_DESC1 GeSwapChainDesc() { return swapChainDesc; }
+	 DXGI_SWAP_CHAIN_DESC1 GeSwapChainDesc() { return swapChainDesc; }
 
-	RTV GetRTV() { return rtv; }
+	 RTV GetRTV() { return rtv; }
 
-	ID3D12DescriptorHeap* GetSrvDescripterHeap() { return srvDescriptorHeap; }
+	 ID3D12DescriptorHeap* GetSrvDescripterHeap() { return srvDescriptorHeap; }
 
 	/// <summary>
 	/// DirectXの解放
@@ -178,7 +178,7 @@ private:
 
 	IDXGIFactory7* dxgiFactory = nullptr;
 	IDXGIAdapter4* useAdapter = nullptr;
-	ID3D12Device* device = nullptr;
+    ID3D12Device* device = nullptr;
 
 	Commands commands;
 

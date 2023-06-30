@@ -16,15 +16,15 @@ public:
 	ImGuiManager();
 	~ImGuiManager();
 
-	void Initialize(WindowsSetup* WinSetup_, DirectXSetup* DXSetup_);
+	static void Initialize(WindowsSetup* WinSetup_, DirectXSetup* DXSetup_);
 
 
-	void BeginFlame(DirectXSetup* DXSetup_);
+	static void BeginFlame(DirectXSetup* DXSetup_);
 
 
-	void EndFlame(DirectXSetup* DXSetup_);
+	static void EndFlame(DirectXSetup* DXSetup_);
 
-	void Release();
+	static void Release();
 private:
 
 };

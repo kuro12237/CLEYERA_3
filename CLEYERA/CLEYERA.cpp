@@ -11,82 +11,82 @@ Cleyera::~Cleyera()
 void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight)
 {
 
-	WinSetup = new WindowsSetup();
-	DXSetup = new DirectXSetup();
-	model = new Model();
-	texManager = new TexManager();
-	imGuimanager = new ImGuiManager();
+	//WinSetup = new WindowsSetup();
+	//DXSetup = new DirectXSetup();
+	//model = new Model();
+	//texManager = new TexManager();
+	//imGuimanager = new ImGuiManager();
 	//WinSetupの初期化
 	
-
-	WinSetup->Initialize(kClientWidth, kClientHeight);
+	WindowsSetup::Initialize(kClientWidth, kClientHeight);
+	//WinSetup->Initialize(kClientWidth, kClientHeight);
 
 	//
 	////DirectXの初期化
 	//
-
+	/*
 	///ファクトリー作成
-	DXSetup->CreateDXGIFactorye();
+	//DXSetup->CreateDXGIFactorye();
+	DirectXSetup::CreateDXGIFactorye();
 
 	///デバイス作成
-	DXSetup->CreateDevice();
-
+	DirectXSetup::CreateDevice();
 #ifdef _DEBUG
 
-	DXSetup->debugErrorInfoQueue();
+	DirectXSetup::debugErrorInfoQueue();
 
 #endif // _DEBUG
 
 	///コマンドリストの生成
-	DXSetup->CreateCommands();
+	DirectXSetup::CreateCommands();
 
 	//swapChain
-	DXSetup->CreateSwapChain(kClientWidth, kClientHeight, WinSetup->GetHwnd());
+	DirectXSetup::CreateSwapChain(kClientWidth, kClientHeight, WindowsSetup::GetInstance()->GetHwnd());
 	//rtvDescritor
-	DXSetup->CreatertvDescritorHeap();
+	DirectXSetup::CreatertvDescritorHeap();
 	//swapChainを引っ張る
-	DXSetup->CreateSwapChainResorce();
+	DirectXSetup::CreateSwapChainResorce();
 	//RTVの設定と作成
-	DXSetup->SettingandCreateRTV();
+	DirectXSetup::SettingandCreateRTV();
 	//フェンスの生成
-	DXSetup->CreateFence();
+	DirectXSetup::CreateFence();
 
-	imGuimanager->Initialize(WinSetup, DXSetup);
+	ImGuiManager::Initialize(WindowsSetup::GetInstance(), DirectXSetup::GetInstance());
 
-	texManager->Initialize();
+	//texManager->Initialize();
 
 	///モデルの初期化
 
 	//DXでつくったものを転送
-	model->SetDevice(DXSetup->GetDevice());
-	model->SetCommands(DXSetup->GetCommands());
+	//model->SetDevice(DXSetup->GetDevice());
+	//model->SetCommands(DXSetup->GetCommands());
 
 	//DXCの初期化
-	model->dxcInitialize();
+	//model->dxcInitialize();
 	//Compileするための対応処理
-	model->InitializeDfIncludeHandler();
+	//model->InitializeDfIncludeHandler();
 	
 
 
 	///シェーダーコンパイル処理
-	model->CompileShaders();
+	//model->CompileShaders();
 
 	//図形描画のパイプライン
-	model->ShapeCreatePSO();
+	//model->ShapeCreatePSO();
 
 	//描画のパイプライン
-	model->SpriteCreatePSO();
+	//model->SpriteCreatePSO();
 
-	model->ShaderRelease();
+	//model->ShaderRelease();
 
-
+	*/
 }
 
-
+/*
 void Cleyera::WinMSG(MSG msg)
 {
-	WinSetup->WinMSG(msg);
-
+	//WinSetup->WinMSG(msg);
+	WindowsSetup::WinMSG(msg);
 }
 
 void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight)
@@ -176,3 +176,4 @@ void Cleyera::SpriteTriangleDraw(Position position, unsigned int color, Matrix4x
 
 
 
+*/
