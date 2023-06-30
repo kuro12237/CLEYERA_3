@@ -18,24 +18,28 @@
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+
+
 class WindowsSetup
 {
 public:
 	WindowsSetup();
 	~WindowsSetup();
 
+	static WindowsSetup* GetInstance();
+
 	/// <summary>
 	/// ウインドウの表示・初期化
 	/// </summary>
 	/// <param name="Width"></param>
 	/// <param name="Height"></param>
-	void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
+	static void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
 	/// <summary>
 	///ウインドウメッセージ処理 
 	/// </summary>
 	/// <param name="msg"></param>
-	void WinMSG(MSG& msg);
+	static void WinMSG(MSG& msg);
 
 
 	/// <summary>
@@ -50,6 +54,8 @@ public:
 	{
 		return hwnd;
 	}
+
+	
 
 private:
 

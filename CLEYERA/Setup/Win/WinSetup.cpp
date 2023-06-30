@@ -10,6 +10,13 @@ WindowsSetup::~WindowsSetup()
 {
 }
 
+WindowsSetup* WindowsSetup::GetInstance()
+{
+	static WindowsSetup instance;
+	return &instance;
+
+}
+
 LRESULT CALLBACK WindowsSetup::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 
@@ -34,17 +41,21 @@ void WindowsSetup::Initialize(const int32_t  kClientWidth, const int32_t  kClien
 {
 
 	//ウインドウプロージャー
-	wc_.lpfnWndProc = WindowProc;
+	//wc_.lpfnWndProc = WindowProc;
+	WindowsSetup::GetInstance()->wc_.lpfnWndProc = WindowsSetup::WindowProc;
 
 	//ウインドウクラス名
-	wc_.lpszClassName = L"CLEYERA";
+	//wc_.lpszClassName = L"CLEYERA";
+	WindowsSetup::GetInstance()->wc_.lpszClassName = L"CLEYERA";
+
 	//インスタンス
-	wc_.hInstance = GetModuleHandle(nullptr);
+	WindowsSetup::GetInstance()->wc_.hInstance = GetModuleHandle(nullptr);
+	//wc_.hInstance = GetModuleHandle(nullptr);
 	//カーソル
-	wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	WindowsSetup::GetInstance()->wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
 
-	RegisterClass(&wc_);
+	RegisterClass(&WindowsSetup::GetInstance()->wc_);
 
 
 	//クライアントの領域設定
@@ -54,8 +65,8 @@ void WindowsSetup::Initialize(const int32_t  kClientWidth, const int32_t  kClien
 
 
 	//ウインドウの生成
-	hwnd = CreateWindow(
-		wc_.lpszClassName,
+	WindowsSetup::GetInstance()->hwnd = CreateWindow(
+		WindowsSetup::GetInstance()->wc_.lpszClassName,
 		L"CLEYERA",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
@@ -64,10 +75,10 @@ void WindowsSetup::Initialize(const int32_t  kClientWidth, const int32_t  kClien
 		wrc.bottom - wrc.top,
 		nullptr,
 		nullptr,
-		wc_.hInstance,
+		WindowsSetup::GetInstance()->wc_.hInstance,
 		nullptr
 	);
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(WindowsSetup::GetInstance()->hwnd, SW_SHOW);
 
 
 

@@ -14,7 +14,7 @@ public:
 	~Cleyera();
 
 
-	void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
+	 static void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
 	void Finalize();
 #pragma region ループする必要がある処理
@@ -24,7 +24,7 @@ public:
 	/// メッセージをWinSetupに転送
 	/// </summary>
 	/// <param name="msg"></param>
-	void WinMSG(MSG msg);
+	static void WinMSG(MSG msg);
 
 
 	void BeginFlame(const int32_t  kClientWidth, const int32_t  kClientHeight);
