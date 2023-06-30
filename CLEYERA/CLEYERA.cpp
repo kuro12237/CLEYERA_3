@@ -119,6 +119,11 @@ texResourceProperty Cleyera::LoadTex(const std::string& filePath)
 	return tex;
 }
 
+void Cleyera::TexRelease(ShapeResourcePeroperty Resource, texResourceProperty tex)
+{
+	model->SpriteResourceRelease(Resource, tex);
+}
+
 ShapeResourcePeroperty  Cleyera::CreateResource()
 {
 	ShapeResourcePeroperty resultResource;
@@ -136,6 +141,13 @@ void Cleyera::TriangleResourceRelease(ShapeResourcePeroperty Resource)
 void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ShapeResourcePeroperty Resource)
 {
 	model->ShapeDraw(position, ColorCode,worldTransform, Resource);
+
+}
+
+void Cleyera::SpriteTriangleDraw(Position, unsigned int color, Matrix4x4 worldTransform, ShapeResourcePeroperty Resource, texResourceProperty tex)
+{
+
+
 
 }
 

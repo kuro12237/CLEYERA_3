@@ -43,9 +43,6 @@
     <Filter Include="CLEYERA\Vector">
       <UniqueIdentifier>{44485d7c-e8cd-4df3-b406-272821ffa74f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CLEYERA\Models\Rect">
-      <UniqueIdentifier>{e05f5dcc-1848-4a1e-9c28-ff444ef19a2a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CLEYERA\Models\TexManager">
       <UniqueIdentifier>{098ef3e0-4f99-4a21-a359-a4218c0cace7}</UniqueIdentifier>
     </Filter>

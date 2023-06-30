@@ -32,7 +32,22 @@ public:
 
 #pragma region テクスチャー
 
+	/// <summary>
+	/// テクスチャの読み込み
+	/// </summary>
+	/// <param name="filePath"></param>
+	/// <returns></returns>
 	texResourceProperty LoadTex(const std::string& filePath);
+
+	/// <summary>
+	/// リソースの解放
+	/// </summary>
+	/// <param name="Resource"></param>
+	/// <param name="tex"></param>
+	void TexRelease(
+		ShapeResourcePeroperty Resource,
+		texResourceProperty tex
+	);
 
 #pragma endregion
 
@@ -48,7 +63,8 @@ public:
 	/// <summary>
 	/// 三角形のResourceの解放
 	/// </summary>
-	void TriangleResourceRelease(ShapeResourcePeroperty Resource);
+	void TriangleResourceRelease(
+		ShapeResourcePeroperty Resource);
 
 	/// <summary>
 	/// 三角形の表示
@@ -57,7 +73,26 @@ public:
 	/// <param name="Color"></param>
 	/// <param name="worldTransform"></param>
 	/// <param name="Resource"></param>
-	void TriangleDraw(Position position,unsigned int Color, Matrix4x4 worldTransform, ShapeResourcePeroperty Resource);
+	void TriangleDraw(
+		Position position,unsigned int Color,
+		Matrix4x4 worldTransform,
+		ShapeResourcePeroperty Resource);
+
+	/// <summary>
+	/// 三角形の表示(テクスチャ)
+	/// </summary>
+	/// <param name=""></param>
+	/// <param name="color"></param>
+	/// <param name="worldTransform"></param>
+	/// <param name="Resource"></param>
+	/// <param name="tex"></param>
+	void SpriteTriangleDraw(
+		Position, unsigned int color,
+		Matrix4x4 worldTransform,
+		ShapeResourcePeroperty Resource,
+		texResourceProperty tex
+	);
+
 
 #pragma endregion
 

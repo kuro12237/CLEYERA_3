@@ -25,6 +25,7 @@
 #include"../Matrix/MatrixTransform.h"
 
 #include"../TexManager/TexManager.h"
+#include"../Vector/Vector2.h"
 struct PSOProperty
 {
 	ID3D12PipelineState* GraphicsPipelineState = nullptr;
@@ -33,6 +34,13 @@ struct PSOProperty
 	ID3DBlob* errorBlob = nullptr;
 
 };
+struct  VertexData
+{
+	Vector4 position;
+	Vector2 texcoord;
+
+};
+
 
 struct DXCProperty
 {
@@ -74,7 +82,7 @@ struct ShapeResourcePeroperty
 
 };
 
-class Model
+class Model : public TexManager
 {
 public:
 	Model();
@@ -175,7 +183,10 @@ public:
     /// Commands
     /// </summary>
     /// <param name="commands"></param>
-	static void ShapeDrawCommands(Commands commands, ShapeResourcePeroperty Resource, PSOProperty Shape);
+	static void ShapeDrawCommands(
+		Commands commands,
+		ShapeResourcePeroperty Resource,
+		PSOProperty Shape);
 
 
 	/// <summary>
@@ -184,7 +195,10 @@ public:
 	/// <param name="position"></param>
 	/// <param name="Color"></param>
 	/// <param name="Resource"></param>
-	void ShapeDraw(Position position, unsigned int Color, Matrix4x4 matrix,ShapeResourcePeroperty Resource);
+	void ShapeDraw(
+		Position position, unsigned int Color, 
+		Matrix4x4 matrix,
+		ShapeResourcePeroperty Resource);
 
 	/// <summary>
 	/// ResourceÇÃâï˙èàóù
@@ -196,11 +210,16 @@ public:
 
 #pragma region âÊëúï\é¶
 
-	texResourceProperty SpriteCreateResource();
 
-	void SpriteDraw();
+	void SpriteDraw(
+		Position position, unsigned int color,
+		Matrix4x4 worldTransform,
+		ShapeResourcePeroperty Resource,
+		texResourceProperty tex);
 
-	void SpriteResourceRelease(texResourceProperty Resource);
+	static void SpriteDrawCommands(ShapeResourcePeroperty Resource,texResourceProperty tex, Commands commands);
+
+	void SpriteResourceRelease(ShapeResourcePeroperty Resource,texResourceProperty tex);
 	
 #pragma endregion
 

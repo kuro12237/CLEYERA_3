@@ -559,3 +559,58 @@ void Model::ShapeResourceDeleate(ShapeResourcePeroperty Resource)
 	Resource.wvpResource->Release();
 	
 }
+
+
+
+void Model::SpriteDraw(Position posi, unsigned int color,Matrix4x4 worldTransform,ShapeResourcePeroperty Resource,texResourceProperty tex)
+{
+
+	VertexData* vertexData = nullptr;
+	//Vector4* vertexData = nullptr;
+	Vector4* MaterialData = nullptr;
+	Matrix4x4* wvpData = nullptr;
+	//書き込むためのアドレスを取得
+	Resource.Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	Resource.Material->Map(0, nullptr, reinterpret_cast<void**>(&MaterialData));
+	Resource.wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
+
+	//reinterpret_cast<void**>(&vertexData);
+
+	//座標
+	//左下
+
+
+}
+
+void Model::SpriteDrawCommands(ShapeResourcePeroperty Resource, texResourceProperty tex,Commands commands)
+{
+
+	commands.List->IASetVertexBuffers(0, 1, &Resource.BufferView);
+
+	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
+	commands.List->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//マテリアルCBufferの場所を設定
+	commands.List->SetGraphicsRootConstantBufferView(0, Resource.Material->GetGPUVirtualAddress());
+
+
+	//wvp用のCBufferの場所を設定
+	commands.List->SetGraphicsRootConstantBufferView(1, Resource.wvpResource->GetGPUVirtualAddress());
+
+	//
+	commands.List->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
+
+
+	//描画(DrawCall/ドローコール)。
+	commands.List->DrawInstanced(3, 1, 0, 0);
+
+}
+
+
+void SpriteResourceRelease(ShapeResourcePeroperty Resource, texResourceProperty tex)
+{
+	Resource.Material->Release();
+	Resource.Vertex->Release();
+	Resource.wvpResource->Release();
+	tex.Resource->Release();
+}
