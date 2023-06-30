@@ -2,9 +2,11 @@
 #include<format>
 #include"Setup/Win/WinSetup.h"
 #include"Setup/DX/DirectXSetup.h"
+
 #include"Models/Model.h"
 #include"TexManager/TexManager.h"
 
+#include"ImGui/ImGuiManager.h"
 class Cleyera
 {
 public:
@@ -14,6 +16,7 @@ public:
 
 	void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
+	void Finalize();
 #pragma region ループする必要がある処理
 
 
@@ -28,8 +31,7 @@ public:
 
 	void EndFlame();
 		  
-	void Deleate();
-
+	
 #pragma region テクスチャー
 
 	/// <summary>
@@ -39,15 +41,8 @@ public:
 	/// <returns></returns>
 	texResourceProperty LoadTex(const std::string& filePath);
 
-	/// <summary>
-	/// リソースの解放
-	/// </summary>
-	/// <param name="Resource"></param>
-	/// <param name="tex"></param>
-	void TexRelease(
-		ShapeResourcePeroperty Resource,
-		texResourceProperty tex
-	);
+
+
 
 #pragma endregion
 
@@ -58,13 +53,13 @@ public:
 	/// 頂点を作る
 	/// </summary>
 	/// <param name="Resource"></param>
-	ShapeResourcePeroperty CreateResource();
+	ResourcePeroperty CreateShapeResource();
 
 	/// <summary>
 	/// 三角形のResourceの解放
 	/// </summary>
 	void TriangleResourceRelease(
-		ShapeResourcePeroperty Resource);
+		ResourcePeroperty Resource);
 
 	/// <summary>
 	/// 三角形の表示
@@ -76,7 +71,14 @@ public:
 	void TriangleDraw(
 		Position position,unsigned int Color,
 		Matrix4x4 worldTransform,
-		ShapeResourcePeroperty Resource);
+		ResourcePeroperty Resource);
+
+
+	/// <summary>
+	/// テクスチャ描画のResourceの作成
+	/// </summary>
+	/// <returns></returns>
+	ResourcePeroperty CreateSpriteResource();
 
 	/// <summary>
 	/// 三角形の表示(テクスチャ)
@@ -87,12 +89,20 @@ public:
 	/// <param name="Resource"></param>
 	/// <param name="tex"></param>
 	void SpriteTriangleDraw(
-		Position, unsigned int color,
+		Position position, unsigned int color,
 		Matrix4x4 worldTransform,
-		ShapeResourcePeroperty Resource,
+		ResourcePeroperty Resource,
 		texResourceProperty tex
 	);
-
+	/// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="Resource"></param>
+    /// <param name="tex"></param>
+	void SpriteTriangleResourceRelease(
+		ResourcePeroperty& Resource,
+		texResourceProperty& tex
+	);
 
 #pragma endregion
 
@@ -113,6 +123,7 @@ private:
 	WindowsSetup* WinSetup = nullptr;
 	DirectXSetup* DXSetup = nullptr;
 	Model* model = nullptr;
+	ImGuiManager* imGuimanager = nullptr;
 	TexManager* texManager = nullptr;
 
 

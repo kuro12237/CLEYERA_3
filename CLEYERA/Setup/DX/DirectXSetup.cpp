@@ -172,7 +172,7 @@ void DirectXSetup::CreateSwapChain(const int32_t Width, const int32_t Height, HW
 {
 	swapChain.swapChain = nullptr;
 
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
+	//DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 
 	//スワップチェーンの設定
 	swapChainDesc.Width = Width;
@@ -230,19 +230,18 @@ void DirectXSetup::CreateSwapChainResorce()
 void DirectXSetup::SettingandCreateRTV()
 {
 
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+	rtv.rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	rtv.rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	rtv.rtvStartHandle = rtv.DescritorHeap->GetCPUDescriptorHandleForHeapStart();
 
 	rtv.rtvHandles[0] = rtv.rtvStartHandle;
-	device->CreateRenderTargetView(swapChain.Resource[0], &rtvDesc, rtv.rtvHandles[0]);
+	device->CreateRenderTargetView(swapChain.Resource[0], &rtv.rtvDesc, rtv.rtvHandles[0]);
 
 
 	rtv.rtvHandles[1].ptr = rtv.rtvHandles[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-	device->CreateRenderTargetView(swapChain.Resource[1], &rtvDesc, rtv.rtvHandles[1]);
+	device->CreateRenderTargetView(swapChain.Resource[1], &rtv.rtvDesc, rtv.rtvHandles[1]);
 
 
 }

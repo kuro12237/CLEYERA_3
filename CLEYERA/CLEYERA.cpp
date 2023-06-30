@@ -15,6 +15,7 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	DXSetup = new DirectXSetup();
 	model = new Model();
 	texManager = new TexManager();
+	imGuimanager = new ImGuiManager();
 	//WinSetupの初期化
 	
 
@@ -50,6 +51,7 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//フェンスの生成
 	DXSetup->CreateFence();
 
+	imGuimanager->Initialize(WinSetup, DXSetup);
 
 	texManager->Initialize();
 
@@ -72,6 +74,7 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//図形描画のパイプライン
 	model->ShapeCreatePSO();
 
+	//描画のパイプライン
 	model->SpriteCreatePSO();
 
 	model->ShaderRelease();
@@ -88,7 +91,7 @@ void Cleyera::WinMSG(MSG msg)
 
 void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight)
 {
-
+	imGuimanager->BeginFlame(DXSetup);
 	DXSetup->BeginFlame();
 	DXSetup->ScissorViewCommand(kClientWidth, kClientHeight);
 
@@ -96,11 +99,13 @@ void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight
 
 void Cleyera::EndFlame()
 {
+	imGuimanager->EndFlame(DXSetup);
 	DXSetup->EndFlame();
 }
 
-void Cleyera::Deleate()
+void Cleyera::Finalize()
 {
+	imGuimanager->Release();
 	texManager->Finalize();
 	DXSetup->Release();
 	model->Release();
@@ -119,35 +124,53 @@ texResourceProperty Cleyera::LoadTex(const std::string& filePath)
 	return tex;
 }
 
-void Cleyera::TexRelease(ShapeResourcePeroperty Resource, texResourceProperty tex)
+ResourcePeroperty Cleyera::CreateSpriteResource()
 {
-	model->SpriteResourceRelease(Resource, tex);
+	ResourcePeroperty ResultResource;
+
+	ResultResource = model->CreateSpriteResource();
+	return ResultResource;
 }
 
-ShapeResourcePeroperty  Cleyera::CreateResource()
+void Cleyera::SpriteTriangleResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
 {
-	ShapeResourcePeroperty resultResource;
+
+	Resource.Vertex->Release();
+    Resource.Material->Release(); 
+    Resource.wvpResource->Release();
+
+    tex.Resource->Release();
+	//model->SpriteResourceRelease(Resource, tex);
+	//Resource;
+	//tex;
+}
+
+
+
+ResourcePeroperty  Cleyera::CreateShapeResource()
+{
+	ResourcePeroperty resultResource;
 	resultResource=model->CreateShapeResource();
 	return resultResource;
 }
 
-void Cleyera::TriangleResourceRelease(ShapeResourcePeroperty Resource)
+void Cleyera::TriangleResourceRelease(ResourcePeroperty Resource)
 {
-	model->ShapeResourceDeleate(Resource);
+	model->ShapeResourceRelease(Resource);
 
 
 }
 
-void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ShapeResourcePeroperty Resource)
+void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ResourcePeroperty Resource)
 {
 	model->ShapeDraw(position, ColorCode,worldTransform, Resource);
 
 }
 
-void Cleyera::SpriteTriangleDraw(Position, unsigned int color, Matrix4x4 worldTransform, ShapeResourcePeroperty Resource, texResourceProperty tex)
+void Cleyera::SpriteTriangleDraw(Position position, unsigned int color, Matrix4x4 worldTransform, ResourcePeroperty Resource, texResourceProperty tex)
 {
 
-
+	model->SpriteDraw(position, color, worldTransform, Resource, tex);
 
 }
 

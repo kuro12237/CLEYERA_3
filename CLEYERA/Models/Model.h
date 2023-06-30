@@ -71,7 +71,7 @@ struct  Position
 
 };
 
-struct ShapeResourcePeroperty
+struct ResourcePeroperty
 {
 	
    D3D12_VERTEX_BUFFER_VIEW BufferView;
@@ -82,7 +82,7 @@ struct ShapeResourcePeroperty
 
 };
 
-class Model : public TexManager
+class Model 
 {
 public:
 	Model();
@@ -177,7 +177,7 @@ public:
 	/// Resourceê∂ê¨
 	/// </summary>
 	/// <returns></returns>
-	ShapeResourcePeroperty  CreateShapeResource();
+	ResourcePeroperty  CreateShapeResource();
 
 	/// <summary>
     /// Commands
@@ -185,7 +185,7 @@ public:
     /// <param name="commands"></param>
 	static void ShapeDrawCommands(
 		Commands commands,
-		ShapeResourcePeroperty Resource,
+		ResourcePeroperty Resource,
 		PSOProperty Shape);
 
 
@@ -198,28 +198,29 @@ public:
 	void ShapeDraw(
 		Position position, unsigned int Color, 
 		Matrix4x4 matrix,
-		ShapeResourcePeroperty Resource);
+		ResourcePeroperty Resource);
 
 	/// <summary>
 	/// ResourceÇÃâï˙èàóù
 	/// </summary>
 	/// <param name="Resource"></param>
-	void ShapeResourceDeleate(ShapeResourcePeroperty Resource);
+	void ShapeResourceRelease(ResourcePeroperty Resource);
 
 #pragma endregion
 
 #pragma region âÊëúï\é¶
 
+	ResourcePeroperty CreateSpriteResource();
 
 	void SpriteDraw(
 		Position position, unsigned int color,
 		Matrix4x4 worldTransform,
-		ShapeResourcePeroperty Resource,
+		ResourcePeroperty Resource,
 		texResourceProperty tex);
 
-	static void SpriteDrawCommands(ShapeResourcePeroperty Resource,texResourceProperty tex, Commands commands);
+	static void SpriteDrawCommands(ResourcePeroperty Resource,texResourceProperty tex, Commands commands, PSOProperty PSO);
 
-	void SpriteResourceRelease(ShapeResourcePeroperty Resource,texResourceProperty tex);
+	void SpriteResourceRelease(ResourcePeroperty &Resource,texResourceProperty &tex);
 	
 #pragma endregion
 

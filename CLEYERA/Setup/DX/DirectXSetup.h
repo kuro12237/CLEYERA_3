@@ -21,6 +21,7 @@
 struct  RTV
 {
 	ID3D12DescriptorHeap* DescritorHeap;
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	//D3D12_DESCRIPTOR_HEAP_DESC rtvDescritorHeapDesc{};
 
 
@@ -111,6 +112,11 @@ public:
 	ID3D12Device* GetDevice() { return device; }
 	Commands GetCommands() { return commands; }
 
+	DXGI_SWAP_CHAIN_DESC1 GeSwapChainDesc() { return swapChainDesc; }
+
+	RTV GetRTV() { return rtv; }
+
+	ID3D12DescriptorHeap* GetSrvDescripterHeap() { return srvDescriptorHeap; }
 
 	/// <summary>
 	/// DirectX‚Ì‰ð•ú
@@ -158,7 +164,6 @@ public:
 
 	void EndFlame();
 
-	ID3D12DescriptorHeap* GetSrvDescripterHeap() { return srvDescriptorHeap; }
 
 #pragma endregion
 
@@ -189,5 +194,7 @@ private:
 	HANDLE fenceEvent;
 
 	D3D12_RESOURCE_BARRIER barrier{};
+
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 };
 

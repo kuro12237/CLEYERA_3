@@ -239,6 +239,7 @@ void Model::ShapeCreatePSO()
 void Model::SpriteCreatePSO()
 {
 
+
 	//RootSignature作成
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 
@@ -377,8 +378,6 @@ void Model::SpriteCreatePSO()
 		IID_PPV_ARGS(&Sprite.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
-
-
 }
 
 
@@ -461,9 +460,9 @@ D3D12_VERTEX_BUFFER_VIEW Model::CreateBufferView(size_t sizeInbyte, ID3D12Resour
 
 }
 
-ShapeResourcePeroperty  Model::CreateShapeResource()
+ResourcePeroperty  Model::CreateShapeResource()
 {
-	ShapeResourcePeroperty resultResource;
+	ResourcePeroperty resultResource;
 
 	resultResource.Vertex = CreateBufferResource(device, sizeof(Vector4) * 3);
 	resultResource.Material = CreateBufferResource(device, sizeof(Vector4));
@@ -492,7 +491,21 @@ Vector4 Model::ColorCodeAdapter(unsigned int color)
 
 }
 
-void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform,ShapeResourcePeroperty Resource)
+ResourcePeroperty Model::CreateSpriteResource()
+{
+	ResourcePeroperty resultResource;
+	
+	resultResource.Vertex = CreateBufferResource(device, sizeof(VertexData) * 3);
+	resultResource.Material = CreateBufferResource(device, sizeof(Vector4));
+	resultResource.wvpResource = CreateBufferResource(device, sizeof(Matrix4x4));
+	resultResource.BufferView = CreateBufferView(sizeof(VertexData) * 3, resultResource.Vertex);
+
+	return resultResource;
+
+
+}
+
+void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform,ResourcePeroperty Resource)
 {
 	Vector4* vertexData = nullptr;
 	Vector4* MaterialData = nullptr;
@@ -527,7 +540,7 @@ void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 world
 
 }
 
-void Model::ShapeDrawCommands(Commands commands, ShapeResourcePeroperty Resource,PSOProperty PSO)
+void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty PSO)
 {
 
 
@@ -542,6 +555,7 @@ void Model::ShapeDrawCommands(Commands commands, ShapeResourcePeroperty Resource
 	//マテリアルCBufferの場所を設定
 	commands.List->SetGraphicsRootConstantBufferView(0, Resource.Material->GetGPUVirtualAddress());
 
+
 	//wvp用のCBufferの場所を設定
 	commands.List->SetGraphicsRootConstantBufferView(1, Resource.wvpResource->GetGPUVirtualAddress());
 
@@ -551,7 +565,7 @@ void Model::ShapeDrawCommands(Commands commands, ShapeResourcePeroperty Resource
 
 }
 
-void Model::ShapeResourceDeleate(ShapeResourcePeroperty Resource)
+void Model::ShapeResourceRelease(ResourcePeroperty Resource)
 {
 
 	Resource.Vertex->Release();
@@ -562,7 +576,7 @@ void Model::ShapeResourceDeleate(ShapeResourcePeroperty Resource)
 
 
 
-void Model::SpriteDraw(Position posi, unsigned int color,Matrix4x4 worldTransform,ShapeResourcePeroperty Resource,texResourceProperty tex)
+void Model::SpriteDraw(Position position, unsigned int color, Matrix4x4 worldTransform, ResourcePeroperty Resource, texResourceProperty tex)
 {
 
 	VertexData* vertexData = nullptr;
@@ -574,16 +588,34 @@ void Model::SpriteDraw(Position posi, unsigned int color,Matrix4x4 worldTransfor
 	Resource.Material->Map(0, nullptr, reinterpret_cast<void**>(&MaterialData));
 	Resource.wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 
-	//reinterpret_cast<void**>(&vertexData);
+	vertexData[0].position = { position.left.x,position.left.y,position.left.z,1.0f };
 
-	//座標
-	//左下
+	vertexData[0].texcoord = { 0.0f,1.0f };
+	////上
+	vertexData[1].position = {position.top.x, position.top.y, position.top.z, 1.0f};
+	vertexData[1].texcoord = { 0.5f,0.0f };
+	////右
+	vertexData[2].position = { position.right.x,position.right.y,position.right.z,1.0f };
+	vertexData[2].texcoord = { 1.0f,1.0f };
 
+	//マテリアル
+	Vector4 colorData = ColorCodeAdapter(color);
+
+	*MaterialData = colorData;
+
+	//行列の変換
+
+	*wvpData = worldTransform;
+
+	SpriteDrawCommands(Resource, tex, commands,Sprite);
 
 }
 
-void Model::SpriteDrawCommands(ShapeResourcePeroperty Resource, texResourceProperty tex,Commands commands)
+void Model::SpriteDrawCommands(ResourcePeroperty Resource, texResourceProperty tex,Commands commands, PSOProperty PSO)
 {
+
+	commands.List->SetGraphicsRootSignature(PSO.rootSignature);
+	commands.List->SetPipelineState(PSO.GraphicsPipelineState);//
 
 	commands.List->IASetVertexBuffers(0, 1, &Resource.BufferView);
 
@@ -607,10 +639,15 @@ void Model::SpriteDrawCommands(ShapeResourcePeroperty Resource, texResourcePrope
 }
 
 
-void SpriteResourceRelease(ShapeResourcePeroperty Resource, texResourceProperty tex)
+void SpriteResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
 {
-	Resource.Material->Release();
-	Resource.Vertex->Release();
-	Resource.wvpResource->Release();
-	tex.Resource->Release();
+
+	//Resource.Vertex->Release();
+	//Resource.Material->Release();
+	//Resource.wvpResource->Release();
+
+	//tex.Resource->Release();
+	//
+	Resource;
+	tex;
 }
