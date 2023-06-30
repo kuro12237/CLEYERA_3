@@ -59,6 +59,7 @@ void TexManager::UploadTexData(ID3D12Resource* tex, const DirectX::ScratchImage&
 		assert(SUCCEEDED(hr));
 
 
+
 	}
 
 }
