@@ -23,6 +23,8 @@
 
 #include"../Matrix/Matrix4x4.h"
 #include"../Matrix/MatrixTransform.h"
+
+#include"../TexManager/TexManager.h"
 struct PSOProperty
 {
 	ID3D12PipelineState* GraphicsPipelineState = nullptr;
@@ -61,7 +63,7 @@ struct  Position
 
 };
 
-struct ResourcePeroperty
+struct ShapeResourcePeroperty
 {
 	
    D3D12_VERTEX_BUFFER_VIEW BufferView;
@@ -167,13 +169,13 @@ public:
 	/// Resourceê∂ê¨
 	/// </summary>
 	/// <returns></returns>
-	ResourcePeroperty  CreateShapeResource();
+	ShapeResourcePeroperty  CreateShapeResource();
 
 	/// <summary>
     /// Commands
     /// </summary>
     /// <param name="commands"></param>
-	static void ShapeDrawCommands(Commands commands, ResourcePeroperty Resource, PSOProperty Shape);
+	static void ShapeDrawCommands(Commands commands, ShapeResourcePeroperty Resource, PSOProperty Shape);
 
 
 	/// <summary>
@@ -182,18 +184,23 @@ public:
 	/// <param name="position"></param>
 	/// <param name="Color"></param>
 	/// <param name="Resource"></param>
-	void ShapeDraw(Position position, unsigned int Color, Matrix4x4 matrix,ResourcePeroperty Resource);
+	void ShapeDraw(Position position, unsigned int Color, Matrix4x4 matrix,ShapeResourcePeroperty Resource);
 
-
-	void ShapeResourceDeleate(ResourcePeroperty Resource);
+	/// <summary>
+	/// ResourceÇÃâï˙èàóù
+	/// </summary>
+	/// <param name="Resource"></param>
+	void ShapeResourceDeleate(ShapeResourcePeroperty Resource);
 
 #pragma endregion
 
 #pragma region âÊëúï\é¶
 
+	texResourceProperty SpriteCreateResource();
 
 	void SpriteDraw();
 
+	void SpriteResourceRelease(texResourceProperty Resource);
 	
 #pragma endregion
 

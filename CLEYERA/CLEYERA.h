@@ -43,12 +43,12 @@ public:
 	/// 頂点を作る
 	/// </summary>
 	/// <param name="Resource"></param>
-	ResourcePeroperty CreateResource();
+	ShapeResourcePeroperty CreateResource();
 
 	/// <summary>
 	/// 三角形のResourceの解放
 	/// </summary>
-	void TriangleResourceRelease(ResourcePeroperty Resource);
+	void TriangleResourceRelease(ShapeResourcePeroperty Resource);
 
 	/// <summary>
 	/// 三角形の表示
@@ -57,7 +57,7 @@ public:
 	/// <param name="Color"></param>
 	/// <param name="worldTransform"></param>
 	/// <param name="Resource"></param>
-	void TriangleDraw(Position position,unsigned int Color, Matrix4x4 worldTransform, ResourcePeroperty Resource);
+	void TriangleDraw(Position position,unsigned int Color, Matrix4x4 worldTransform, ShapeResourcePeroperty Resource);
 
 #pragma endregion
 

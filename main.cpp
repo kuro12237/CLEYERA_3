@@ -5,7 +5,7 @@
 struct Triangle
 {
 	Position position;
-	ResourcePeroperty Resources;
+	ShapeResourcePeroperty Resources;
 	unsigned int Color;
 	Matrix4x4 matrix;
 };

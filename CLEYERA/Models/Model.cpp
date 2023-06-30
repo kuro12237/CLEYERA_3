@@ -461,9 +461,9 @@ D3D12_VERTEX_BUFFER_VIEW Model::CreateBufferView(size_t sizeInbyte, ID3D12Resour
 
 }
 
-ResourcePeroperty  Model::CreateShapeResource()
+ShapeResourcePeroperty  Model::CreateShapeResource()
 {
-	ResourcePeroperty resultResource;
+	ShapeResourcePeroperty resultResource;
 
 	resultResource.Vertex = CreateBufferResource(device, sizeof(Vector4) * 3);
 	resultResource.Material = CreateBufferResource(device, sizeof(Vector4));
@@ -492,7 +492,7 @@ Vector4 Model::ColorCodeAdapter(unsigned int color)
 
 }
 
-void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform,ResourcePeroperty Resource)
+void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform,ShapeResourcePeroperty Resource)
 {
 	Vector4* vertexData = nullptr;
 	Vector4* MaterialData = nullptr;
@@ -527,7 +527,7 @@ void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 world
 
 }
 
-void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty PSO)
+void Model::ShapeDrawCommands(Commands commands, ShapeResourcePeroperty Resource,PSOProperty PSO)
 {
 
 
@@ -551,7 +551,7 @@ void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOP
 
 }
 
-void Model::ShapeResourceDeleate(ResourcePeroperty Resource)
+void Model::ShapeResourceDeleate(ShapeResourcePeroperty Resource)
 {
 
 	Resource.Vertex->Release();

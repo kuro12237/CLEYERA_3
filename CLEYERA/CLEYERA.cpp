@@ -119,21 +119,21 @@ texResourceProperty Cleyera::LoadTex(const std::string& filePath)
 	return tex;
 }
 
-ResourcePeroperty  Cleyera::CreateResource()
+ShapeResourcePeroperty  Cleyera::CreateResource()
 {
-	ResourcePeroperty resultResource;
+	ShapeResourcePeroperty resultResource;
 	resultResource=model->CreateShapeResource();
 	return resultResource;
 }
 
-void Cleyera::TriangleResourceRelease(ResourcePeroperty Resource)
+void Cleyera::TriangleResourceRelease(ShapeResourcePeroperty Resource)
 {
 	model->ShapeResourceDeleate(Resource);
 
 
 }
 
-void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ResourcePeroperty Resource)
+void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ShapeResourcePeroperty Resource)
 {
 	model->ShapeDraw(position, ColorCode,worldTransform, Resource);
 
