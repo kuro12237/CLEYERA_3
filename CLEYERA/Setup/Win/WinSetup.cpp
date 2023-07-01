@@ -94,7 +94,7 @@ void WindowsSetup::WinMSG(MSG& msg)
 
 void WindowsSetup::Deleate()
 {
-	CloseWindow(hwnd);
+	CloseWindow(WindowsSetup::GetInstance()->hwnd);
 
 
 }

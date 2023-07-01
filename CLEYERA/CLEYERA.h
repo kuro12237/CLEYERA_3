@@ -16,7 +16,7 @@ public:
 
 	 static void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
-	void Finalize();
+	static void Finalize();
 #pragma region ループする必要がある処理
 
 
@@ -27,9 +27,9 @@ public:
 	static void WinMSG(MSG msg);
 
 
-	void BeginFlame(const int32_t  kClientWidth, const int32_t  kClientHeight);
+	static void BeginFlame(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
-	void EndFlame();
+	static void EndFlame();
 		  
 	
 #pragma region テクスチャー

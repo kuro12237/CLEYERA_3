@@ -11,22 +11,18 @@ Cleyera::~Cleyera()
 void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight)
 {
 
-	//WinSetup = new WindowsSetup();
-	//DXSetup = new DirectXSetup();
-	//model = new Model();
-	//texManager = new TexManager();
-	//imGuimanager = new ImGuiManager();
+	
 	//WinSetupの初期化
 	
 	WindowsSetup::Initialize(kClientWidth, kClientHeight);
-	//WinSetup->Initialize(kClientWidth, kClientHeight);
+
 
 	//
 	////DirectXの初期化
 	//
-	/*
+	
 	///ファクトリー作成
-	//DXSetup->CreateDXGIFactorye();
+	
 	DirectXSetup::CreateDXGIFactorye();
 
 	///デバイス作成
@@ -53,7 +49,7 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 
 	ImGuiManager::Initialize(WindowsSetup::GetInstance(), DirectXSetup::GetInstance());
 
-	//texManager->Initialize();
+	TexManager::Initialize();
 
 	///モデルの初期化
 
@@ -79,42 +75,44 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 
 	//model->ShaderRelease();
 
-	*/
+	
 }
 
-/*
+
 void Cleyera::WinMSG(MSG msg)
 {
-	//WinSetup->WinMSG(msg);
+	
 	WindowsSetup::WinMSG(msg);
 }
 
 void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight)
 {
-	imGuimanager->BeginFlame(DXSetup);
-	DXSetup->BeginFlame();
-	DXSetup->ScissorViewCommand(kClientWidth, kClientHeight);
+	ImGuiManager::BeginFlame(DirectXSetup::GetInstance());
+	//imGuimanager->BeginFlame(DXSetup);
+	DirectXSetup::BeginFlame();
+	DirectXSetup::ScissorViewCommand(kClientWidth, kClientHeight);
 
 }
 
 void Cleyera::EndFlame()
 {
-	imGuimanager->EndFlame(DXSetup);
-	DXSetup->EndFlame();
+	ImGuiManager::EndFlame(DirectXSetup::GetInstance());
+	DirectXSetup::EndFlame();
 }
+
 
 void Cleyera::Finalize()
 {
-	imGuimanager->Release();
-	texManager->Finalize();
-	DXSetup->Release();
-	model->Release();
-	WinSetup->Deleate();
-	DXSetup->ReleaseChack();
+	ImGuiManager::Release();
+	TexManager::Finalize();
+	DirectXSetup::Release();
+	//model->Release();
+	WindowsSetup::Deleate();
+	DirectXSetup::ReleaseChack();
 
 
 }
-
+/*
 texResourceProperty Cleyera::LoadTex(const std::string& filePath)
 {
 	texResourceProperty tex;

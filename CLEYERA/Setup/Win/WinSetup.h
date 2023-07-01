@@ -45,7 +45,7 @@ public:
 	/// <summary>
 	/// Close
 	/// </summary>
-	void Deleate();
+	static void Deleate();
 
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

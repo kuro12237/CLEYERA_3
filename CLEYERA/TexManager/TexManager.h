@@ -21,14 +21,14 @@ public:
 	~TexManager();
 
 
-	void Initialize();
+	static void Initialize();
 
-	void Finalize();
+	static void Finalize();
 
 
 	static DirectX::ScratchImage CreateMipImage(const std::string& filePath);
 
-	void UploadTexData(ID3D12Resource* tex, const DirectX::ScratchImage& mipImage);
+	static void UploadTexData(ID3D12Resource* tex, const DirectX::ScratchImage& mipImage);
 
 
 

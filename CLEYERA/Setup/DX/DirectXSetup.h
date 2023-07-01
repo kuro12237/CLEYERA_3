@@ -121,7 +121,7 @@ public:
 	/// <summary>
 	/// DirectXの解放
 	/// </summary>
-	void Release();
+	static void Release();
 
 	
 
@@ -138,15 +138,15 @@ public:
 	static void CommandsRelease(Commands commands);
 #pragma endregion 
 
-	void ReleaseChack();
+	static void ReleaseChack();
 
 
 
 #pragma region ループ
 
-	void BeginFlame();
+	static void BeginFlame();
 
-	void ScissorViewCommand(const int32_t kClientWidth, const int32_t kClientHeight);
+	static void ScissorViewCommand(const int32_t kClientWidth, const int32_t kClientHeight);
 
 	/// <summary>
 	/// ビューポートの設定
@@ -162,7 +162,7 @@ public:
 	static D3D12_RECT scissorRectSetting(int32_t kClientWidth, int32_t kClientHeight);
 
 
-	void EndFlame();
+	static void EndFlame();
 
 
 #pragma endregion

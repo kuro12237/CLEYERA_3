@@ -8,7 +8,7 @@ struct Triangle
 	ResourcePeroperty Resources;
 	unsigned int Color;
 	Matrix4x4 matrix;
-};
+}; 
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -16,7 +16,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//Cleyera* Cleyera_ = new Cleyera;
 
-	//MatrixTransform* matrixTransform = new MatrixTransform();
+	MatrixTransform* matrixTransform = new MatrixTransform();
 
 	//Size
 	const int32_t kClientWidth = 1280;
@@ -24,13 +24,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Cleyera::Initialize(kClientWidth, kClientHeight);
 	//Cleyera_->Initialize(kClientWidth, kClientHeight);
-}
-/*
+
+
 	Triangle triangle[TriangleMax];
 	//t,l,r
 	triangle[0].position =
 	{ {0.0f,0.0,0.0f},{-0.5f,-1.0f,0.0f},{0.5f,-1.0f,0.0f } };
-	triangle[0].Resources = Cleyera_->CreateShapeResource();
+	//triangle[0].Resources = Cleyera_->CreateShapeResource();
 	triangle[0].Color = 0xff0000ff;
 	triangle[0].matrix = matrixTransform->Identity();
 
@@ -39,25 +39,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	{ 0.0f, 1.0f, 0.0f},
 	{ -0.5f,0.0f,0.0f },
 	{ 0.5f,-0.0f,0.0f} };
-	triangle[1].Resources = Cleyera_->CreateSpriteResource();
+	//triangle[1].Resources = Cleyera_->CreateSpriteResource();
 	triangle[1].Color = 0xffffffff;
 	triangle[1].matrix = matrixTransform->Identity();
 
 
 
-	texResourceProperty tex;
+	//texResourceProperty tex;
 
-	tex = Cleyera_->LoadTex("CLEYERA/DefaultResources/uvChecker.png");
+	//tex = Cleyera_->LoadTex("CLEYERA/DefaultResources/uvChecker.png");
 	
-	texResourceProperty Enemytex;
-	Enemytex = Cleyera_->LoadTex("CLEYERA/DefaultResources/Enemy.png");
+	//texResourceProperty Enemytex;
+	//Enemytex = Cleyera_->LoadTex("CLEYERA/DefaultResources/Enemy.png");
 
 	triangle[2].position =
 	{
 	{ -0.5f, 1.0f, 0.0f},
 	{ -1.0f,0.0f,0.0f },
 	{ 0.0f,0.0f,0.0f} };
-	triangle[2].Resources = Cleyera_->CreateSpriteResource();
+	//triangle[2].Resources = Cleyera_->CreateSpriteResource();
 	triangle[2].Color = 0xffffffff;
 	triangle[2].matrix = matrixTransform->Identity();
 
@@ -74,21 +74,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 		}
-
-		Cleyera_->BeginFlame(kClientWidth, kClientHeight);
+		Cleyera::BeginFlame(kClientWidth, kClientHeight);
+		//Cleyera_->BeginFlame(kClientWidth, kClientHeight);
 		
 		for (int i = 0; i < TriangleMax; i++)
 		{
 		
 
-
+/*
 			Cleyera_->TriangleDraw(triangle[0].position,
 				triangle[0].Color, triangle[0].matrix,
 				triangle[0].Resources);
-	
+	*/
 	     }
 
-
+		/*
 		Cleyera_->SpriteTriangleDraw(
 			triangle[1].position,
 			triangle[1].Color,
@@ -106,27 +106,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			Enemytex
 
 		);
-
-		Cleyera_->EndFlame();
+		*/
+		Cleyera::EndFlame();
 	}
 
 	///
 	/// }Œ`‚Ì‰ð•úˆ—
 	/// 
+	/*
 	Cleyera_->TriangleResourceRelease(triangle[0].Resources);
 
 
 		Cleyera_->SpriteTriangleResourceRelease(triangle[1].Resources, tex);
 		Cleyera_->SpriteTriangleResourceRelease(triangle[2].Resources, Enemytex);
+	*/
 	///
 	///
 	/// 
 	
 
-	Cleyera_->Finalize();
-
+	//Cleyera_->Finalize();
+	Cleyera::Finalize();
 	return 0;
 
 
 }
-*/
