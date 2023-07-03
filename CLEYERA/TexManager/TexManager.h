@@ -46,7 +46,7 @@ public:
 	static D3D12_HEAP_PROPERTIES SettingHeap();
 	
 	
-	ID3D12Resource* CreateTexResource(const DirectX::TexMetadata& metadata, DirectXSetup* DXSetup_);
+	static ID3D12Resource* CreateTexResource(const DirectX::TexMetadata& metadata, DirectXSetup* DXSetup_);
 
 
 	/// <summary>
@@ -54,7 +54,7 @@ public:
 	/// </summary>
 	/// <param name="filePath"></param>
 	/// <returns></returns>
-	texResourceProperty LoadTexture(const std::string& filePath, DirectXSetup* DxSetup_);
+	static texResourceProperty LoadTexture(const std::string& filePath, DirectXSetup* DxSetup_);
 
 
 

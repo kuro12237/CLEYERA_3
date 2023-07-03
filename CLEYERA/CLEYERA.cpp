@@ -88,7 +88,6 @@ void Cleyera::WinMSG(MSG msg)
 void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight)
 {
 	ImGuiManager::BeginFlame(DirectXSetup::GetInstance());
-	//imGuimanager->BeginFlame(DXSetup);
 	DirectXSetup::BeginFlame();
 	DirectXSetup::ScissorViewCommand(kClientWidth, kClientHeight);
 
@@ -112,16 +111,16 @@ void Cleyera::Finalize()
 
 
 }
-/*
+
 texResourceProperty Cleyera::LoadTex(const std::string& filePath)
 {
 	texResourceProperty tex;
 
-	tex=texManager->LoadTexture(filePath, DXSetup);
-	
+	tex = TexManager::LoadTexture(filePath, DirectXSetup::GetInstance());
+
 	return tex;
 }
-
+/*
 ResourcePeroperty Cleyera::CreateSpriteResource()
 {
 	ResourcePeroperty ResultResource;

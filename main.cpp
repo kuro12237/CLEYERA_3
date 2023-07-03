@@ -23,8 +23,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	const int32_t kClientHeight = 720;
 
 	Cleyera::Initialize(kClientWidth, kClientHeight);
-	//Cleyera_->Initialize(kClientWidth, kClientHeight);
-
 
 	Triangle triangle[TriangleMax];
 	//t,l,r
@@ -47,7 +45,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//texResourceProperty tex;
 
-	//tex = Cleyera_->LoadTex("CLEYERA/DefaultResources/uvChecker.png");
+	//tex = Cleyera::LoadTex("CLEYERA/DefaultResources/uvChecker.png");
 	
 	//texResourceProperty Enemytex;
 	//Enemytex = Cleyera_->LoadTex("CLEYERA/DefaultResources/Enemy.png");
@@ -75,7 +73,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		}
 		Cleyera::BeginFlame(kClientWidth, kClientHeight);
-		//Cleyera_->BeginFlame(kClientWidth, kClientHeight);
+	
 		
 		for (int i = 0; i < TriangleMax; i++)
 		{
@@ -125,7 +123,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	/// 
 	
 
-	//Cleyera_->Finalize();
+	
 	Cleyera::Finalize();
 	return 0;
 

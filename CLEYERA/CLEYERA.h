@@ -39,7 +39,7 @@ public:
 	/// </summary>
 	/// <param name="filePath"></param>
 	/// <returns></returns>
-	texResourceProperty LoadTex(const std::string& filePath);
+	static texResourceProperty LoadTex(const std::string& filePath);
 
 
 
