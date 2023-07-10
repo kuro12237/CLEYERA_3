@@ -114,7 +114,6 @@ ID3D12Resource* TexManager::CreateTexResource(const DirectX::TexMetadata& metada
 	assert(SUCCEEDED(hr));
 
 	return Resource;
-	//Resource->Release();
 }
 
 texResourceProperty TexManager::LoadTexture(const std::string& filePath, DirectXSetup*DXSetup_)
@@ -148,6 +147,4 @@ texResourceProperty TexManager::LoadTexture(const std::string& filePath, DirectX
 	tex.SrvHandleGPU = texSrvHandleGPU;
 
 	return tex;
-	//texResource->Release();
-	//mipImages.Release();
 }

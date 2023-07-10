@@ -1,21 +1,37 @@
 ﻿#pragma once
 #include<format>
-#include"Setup/Win/WinSetup.h"
+#include"Setup/Win/WinApp.h"
 #include"Setup/DX/DirectXSetup.h"
 
 #include"Models/Model.h"
 #include"TexManager/TexManager.h"
 
 #include"ImGui/ImGuiManager.h"
+
+struct Triangle
+{
+	Position position;
+	ResourcePeroperty Resources;
+	unsigned int Color;
+	Matrix4x4 matrix;
+};
+
 class Cleyera
 {
 public:
 	Cleyera();
 	~Cleyera();
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="kClientWidth"></param>
+	/// <param name="kClientHeight"></param>
+	static void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
-	 static void Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight);
-
+	/// <summary>
+	/// 解放
+	/// </summary>
 	static void Finalize();
 #pragma region ループする必要がある処理
 
@@ -25,7 +41,6 @@ public:
 	/// </summary>
 	/// <param name="msg"></param>
 	static void WinMSG(MSG msg);
-
 
 	static void BeginFlame(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
@@ -53,14 +68,14 @@ public:
 	/// 頂点を作る
 	/// </summary>
 	/// <param name="Resource"></param>
-	ResourcePeroperty CreateShapeResource();
+	static	ResourcePeroperty CreateShapeResource();
 
 	/// <summary>
 	/// 三角形のResourceの解放
 	/// </summary>
-	void TriangleResourceRelease(
+	static void TriangleResourceRelease(
 		ResourcePeroperty Resource);
-
+	
 	/// <summary>
 	/// 三角形の表示
 	/// </summary>
@@ -68,7 +83,7 @@ public:
 	/// <param name="Color"></param>
 	/// <param name="worldTransform"></param>
 	/// <param name="Resource"></param>
-	void TriangleDraw(
+	static void TriangleDraw(
 		Position position,unsigned int Color,
 		Matrix4x4 worldTransform,
 		ResourcePeroperty Resource);
@@ -78,7 +93,7 @@ public:
 	/// テクスチャ描画のResourceの作成
 	/// </summary>
 	/// <returns></returns>
-	ResourcePeroperty CreateSpriteResource();
+	static ResourcePeroperty CreateSpriteResource();
 
 	/// <summary>
 	/// 三角形の表示(テクスチャ)
@@ -88,7 +103,7 @@ public:
 	/// <param name="worldTransform"></param>
 	/// <param name="Resource"></param>
 	/// <param name="tex"></param>
-	void SpriteTriangleDraw(
+	static void SpriteTriangleDraw(
 		Position position, unsigned int color,
 		Matrix4x4 worldTransform,
 		ResourcePeroperty Resource,
@@ -99,7 +114,7 @@ public:
     /// </summary>
     /// <param name="Resource"></param>
     /// <param name="tex"></param>
-	void SpriteTriangleResourceRelease(
+	static void SpriteTriangleResourceRelease(
 		ResourcePeroperty& Resource,
 		texResourceProperty& tex
 	);
@@ -120,12 +135,7 @@ public:
 private:
 
 
-	WindowsSetup* WinSetup = nullptr;
-	DirectXSetup* DXSetup = nullptr;
-	Model* model = nullptr;
-	ImGuiManager* imGuimanager = nullptr;
-	TexManager* texManager = nullptr;
-
+	
 
 };
 

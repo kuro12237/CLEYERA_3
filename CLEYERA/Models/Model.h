@@ -26,6 +26,12 @@
 
 #include"../TexManager/TexManager.h"
 #include"../Vector/Vector2.h"
+
+
+#define WHITE 0xFFFFFFFF
+#define BLACK 0x000000FF
+
+
 struct PSOProperty
 {
 	ID3D12PipelineState* GraphicsPipelineState = nullptr;
@@ -88,15 +94,19 @@ public:
 	Model();
 	~Model();
 
+	static Model*GetInstance();
+
 #pragma region 初期化
 	void Initialize();
 
-	void SetDevice(ID3D12Device* device_);
-	void SetCommands(Commands command);
+	
 
-	void dxcInitialize();
+	static void SetDevice(ID3D12Device* device_);
+	static void SetCommands(Commands command);
 
-	void InitializeDfIncludeHandler();
+	static void dxcInitialize();
+
+	static void InitializeDfIncludeHandler();
 
 
 	/// <summary>
@@ -118,48 +128,96 @@ public:
 	/// <summary>
 	/// 実際にコンパイルする
 	/// </summary>
-	void CompileShaders();
+	static void CompileShaders();
 
 	/// <summary>
 	/// 色の図形のPSO生成
 	/// </summary>
-	void ShapeCreatePSO();
+	static void ShapeCreatePSO();
 
 	/// <summary>
 	/// 画像用のPSO
 	/// </summary>
-	void SpriteCreatePSO();
+	static void SpriteCreatePSO();
 
 
 
 	/// <summary>
 	/// コンパイルしたシェーダーのリリース
 	/// </summary>
-	void ShaderRelease();
+	static void ShaderRelease();
 
 
 
 	/// <summary>
 	/// PSOなどのリリース
 	/// </summary>
-	void Release();
+	static void Finalize();
 
 
 #pragma endregion
 
-	/// <summary>
-	/// 色変換
-	/// </summary>
-	/// <param name="color"></param>
-	/// <returns></returns>
-	Vector4 ColorCodeAdapter(unsigned int color);
+
+#pragma region 三角形
+
 
 	/// <summary>
-    /// Resourceを作成
+	/// Resource生成
+	/// </summary>
+	/// <returns></returns>
+	static ResourcePeroperty  CreateShapeResource();
+
+
+	/// <summary>
+	/// 表示
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="Color"></param>
+	/// <param name="Resource"></param>
+	static void ShapeDraw(
+		Position position, unsigned int Color, 
+		Matrix4x4 matrix,
+		ResourcePeroperty Resource);
+
+	/// <summary>
+	/// Resourceの解放処理
+	/// </summary>
+	/// <param name="Resource"></param>
+	static void ShapeResourceRelease(ResourcePeroperty Resource);
+
+#pragma endregion
+
+#pragma region 画像表示
+
+	static ResourcePeroperty CreateSpriteResource();
+
+	static void SpriteDraw(
+		Position position, unsigned int color,
+		Matrix4x4 worldTransform,
+		ResourcePeroperty Resource,
+		texResourceProperty tex);
+
+	static void SpriteResourceRelease(ResourcePeroperty &Resource,texResourceProperty &tex);
+	
+#pragma endregion
+
+
+private:
+
+	/// <summary>
+    /// 色変換
     /// </summary>
-    /// <param name="device"></param>
-    /// <param name="sizeInbyte"></param>
+    /// <param name="color"></param>
     /// <returns></returns>
+	static Vector4 ColorCodeAdapter(unsigned int color);
+
+
+	/// <summary>
+	/// Resourceを作成
+	/// </summary>
+	/// <param name="device"></param>
+	/// <param name="sizeInbyte"></param>
+	/// <returns></returns>
 	static ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInbyte);
 
 	/// <summary>
@@ -170,17 +228,9 @@ public:
 	/// <returns></returns>
 	static D3D12_VERTEX_BUFFER_VIEW CreateBufferView(size_t sizeInbyte, ID3D12Resource* Resource);
 
-#pragma region 三角形
-
 
 	/// <summary>
-	/// Resource生成
-	/// </summary>
-	/// <returns></returns>
-	ResourcePeroperty  CreateShapeResource();
-
-	/// <summary>
-    /// Commands
+    /// ShapeCommands
     /// </summary>
     /// <param name="commands"></param>
 	static void ShapeDrawCommands(
@@ -188,44 +238,25 @@ public:
 		ResourcePeroperty Resource,
 		PSOProperty Shape);
 
+	/// <summary>
+    /// SpriteCommands
+    /// </summary>
+    /// <param name="commands"></param>
+	static void SpriteDrawCommands(
+		ResourcePeroperty Resource, 
+		texResourceProperty tex, 
+		Commands commands, PSOProperty PSO);
 
 	/// <summary>
-	/// 表示
+	/// パイプラインの解放
 	/// </summary>
-	/// <param name="position"></param>
-	/// <param name="Color"></param>
-	/// <param name="Resource"></param>
-	void ShapeDraw(
-		Position position, unsigned int Color, 
-		Matrix4x4 matrix,
-		ResourcePeroperty Resource);
+	static void PSORelese(PSOProperty PSO);
 
 	/// <summary>
-	/// Resourceの解放処理
+	/// シェーダーの解放
 	/// </summary>
-	/// <param name="Resource"></param>
-	void ShapeResourceRelease(ResourcePeroperty Resource);
+	static void FancShaderRelease(Mode shader);
 
-#pragma endregion
-
-#pragma region 画像表示
-
-	ResourcePeroperty CreateSpriteResource();
-
-	void SpriteDraw(
-		Position position, unsigned int color,
-		Matrix4x4 worldTransform,
-		ResourcePeroperty Resource,
-		texResourceProperty tex);
-
-	static void SpriteDrawCommands(ResourcePeroperty Resource,texResourceProperty tex, Commands commands, PSOProperty PSO);
-
-	void SpriteResourceRelease(ResourcePeroperty &Resource,texResourceProperty &tex);
-	
-#pragma endregion
-
-
-private:
 
 	ID3D12Device* device=nullptr;
 	Commands commands;

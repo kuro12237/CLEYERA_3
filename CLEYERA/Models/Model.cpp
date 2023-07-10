@@ -4,20 +4,31 @@ Model::Model()
 {
 }
 
+Model::~Model()
+{
+}
+
+
+
+Model* Model::GetInstance()
+{
+	static Model instance;
+	return &instance;
+}
 void Model::Initialize()
 {
 }
 
 void Model::SetDevice(ID3D12Device*device_)
 {
-	device = device_;
+	Model::GetInstance()->device = device_;
 
 }
 
 void Model::SetCommands(Commands command_)
 {
+	Model::GetInstance()->commands = command_;
 
-	commands = command_;
 }
 
 void Model::dxcInitialize()
@@ -26,10 +37,10 @@ void Model::dxcInitialize()
 
 	HRESULT hr;
 	
-	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxc.Utils));
+	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&Model::GetInstance()->dxc.Utils));
 	assert(SUCCEEDED(hr));
 
-	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxc.Compiler));
+	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&Model::GetInstance()->dxc.Compiler));
 	assert(SUCCEEDED(hr));
 
 }
@@ -38,7 +49,7 @@ void Model::InitializeDfIncludeHandler()
 {
 
 
-	HRESULT hr = dxc.Utils->CreateDefaultIncludeHandler(&includeHandler);
+	HRESULT hr = Model::GetInstance()->dxc.Utils->CreateDefaultIncludeHandler(&Model::GetInstance()->includeHandler);
 	assert(SUCCEEDED(hr));
 
 
@@ -112,6 +123,11 @@ IDxcBlob* Model::CompilerShader(
 
 void Model::CompileShaders()
 {
+	Shaders shader;
+
+	DXCProperty dxc = Model::GetInstance()->dxc;
+	IDxcIncludeHandler* includeHandler = Model::GetInstance()->includeHandler;
+
 	//Shaderをコンパイルする
 	shader.shape.vertexBlob = CompilerShader(L"Shader/ShapeObject3d.VS.hlsl",
 		L"vs_6_0", dxc.Utils, dxc.Compiler, includeHandler);
@@ -129,10 +145,18 @@ void Model::CompileShaders()
 		L"ps_6_0", dxc.Utils, dxc.Compiler, includeHandler);
 	assert(shader.sprite.pixelBlob);
 
+	Model::GetInstance()->shader = shader;
+
 }
 
 void Model::ShapeCreatePSO()
 {
+
+	PSOProperty Shape;
+	ID3D12Device* device = Model::GetInstance()->device;
+	Commands commands = Model::GetInstance()->commands;
+	Shaders shader = Model::GetInstance()->shader;
+
 	HRESULT hr;
 
 	//RootSignature作成
@@ -232,12 +256,21 @@ void Model::ShapeCreatePSO()
 		IID_PPV_ARGS(&Shape.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
+	Model::GetInstance()->Shape= Shape;
+    Model::GetInstance()->device=device;
+	Model::GetInstance()->commands = commands;
+	Model::GetInstance()->shader = shader;
 
 
 }
 
+
 void Model::SpriteCreatePSO()
 {
+	PSOProperty Sprite;
+	ID3D12Device* device = Model::GetInstance()->device;
+	Commands commands = Model::GetInstance()->commands;
+	Shaders shader = Model::GetInstance()->shader;
 
 
 	//RootSignature作成
@@ -378,38 +411,31 @@ void Model::SpriteCreatePSO()
 		IID_PPV_ARGS(&Sprite.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
+	Model::GetInstance()->Sprite = Sprite;
+	Model::GetInstance()->device = device;
+	Model::GetInstance()->commands = commands;
+	Model::GetInstance()->shader = shader;
 }
+
 
 
 
 void Model::ShaderRelease()
 {
-	shader.shape.pixelBlob->Release();
-	shader.shape.vertexBlob->Release();
 
-	shader.sprite.pixelBlob->Release();
-	shader.sprite.vertexBlob->Release();
+	
+	FancShaderRelease(Model::GetInstance()->shader.shape);
+	FancShaderRelease(Model::GetInstance()->shader.sprite);
 }
 
 
-void Model::Release()
+void Model::Finalize()
 {
-	Shape.GraphicsPipelineState->Release();
-	Shape.signatureBlob->Release();
-	if (Shape.errorBlob)
-	{
-		Shape.errorBlob->Release();
-	}
-	Shape.rootSignature->Release();
+	//図形
+	PSORelese(Model::GetInstance()->Shape);
 
-	
-	Sprite.GraphicsPipelineState->Release();
-	Sprite.signatureBlob->Release();
-	if (Sprite.errorBlob)
-	{
-		Sprite.errorBlob->Release();
-	}
-	Sprite.rootSignature->Release();
+	//sprite
+	PSORelese(Model::GetInstance()->Sprite);
 	
 }
 
@@ -463,12 +489,12 @@ D3D12_VERTEX_BUFFER_VIEW Model::CreateBufferView(size_t sizeInbyte, ID3D12Resour
 ResourcePeroperty  Model::CreateShapeResource()
 {
 	ResourcePeroperty resultResource;
-
+	ID3D12Device* device = Model::GetInstance()->device;
 	resultResource.Vertex = CreateBufferResource(device, sizeof(Vector4) * 3);
 	resultResource.Material = CreateBufferResource(device, sizeof(Vector4));
 	resultResource.wvpResource = CreateBufferResource(device, sizeof(Matrix4x4));
 	resultResource.BufferView = CreateBufferView(sizeof(Vector4) * 3,resultResource.Vertex);
-   
+	Model::GetInstance()->device = device;
 	return resultResource;
 
 }
@@ -494,11 +520,12 @@ Vector4 Model::ColorCodeAdapter(unsigned int color)
 ResourcePeroperty Model::CreateSpriteResource()
 {
 	ResourcePeroperty resultResource;
-	
+	ID3D12Device* device = Model::GetInstance()->device;
 	resultResource.Vertex = CreateBufferResource(device, sizeof(VertexData) * 3);
 	resultResource.Material = CreateBufferResource(device, sizeof(Vector4));
 	resultResource.wvpResource = CreateBufferResource(device, sizeof(Matrix4x4));
 	resultResource.BufferView = CreateBufferView(sizeof(VertexData) * 3, resultResource.Vertex);
+	Model::GetInstance()->device = device;
 
 	return resultResource;
 
@@ -536,7 +563,7 @@ void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 world
 	
 	*wvpData = worldTransform;
 	
-	ShapeDrawCommands(commands,Resource,Shape);
+	ShapeDrawCommands(Model::GetInstance()->commands,Resource, Model::GetInstance()->Shape);
 
 }
 
@@ -607,7 +634,7 @@ void Model::SpriteDraw(Position position, unsigned int color, Matrix4x4 worldTra
 
 	*wvpData = worldTransform;
 
-	SpriteDrawCommands(Resource, tex, commands,Sprite);
+	SpriteDrawCommands(Resource, tex,Model::GetInstance()->commands, Model::GetInstance()->Sprite);
 
 }
 
@@ -638,16 +665,33 @@ void Model::SpriteDrawCommands(ResourcePeroperty Resource, texResourceProperty t
 
 }
 
+void Model::PSORelese(PSOProperty PSO)
+{
+	PSO.GraphicsPipelineState->Release();
+    PSO.signatureBlob->Release();
+	if (PSO.errorBlob)
+	{
+		PSO.errorBlob->Release();
+	}
+	PSO.rootSignature->Release();
 
-void SpriteResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
+
+}
+
+void Model::FancShaderRelease(Mode shader)
+{
+	shader.pixelBlob->Release();
+	shader.vertexBlob->Release();
+
+}
+
+void Model::SpriteResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
 {
 
-	//Resource.Vertex->Release();
-	//Resource.Material->Release();
-	//Resource.wvpResource->Release();
+	Resource.Vertex->Release();
+	Resource.Material->Release();
+	Resource.wvpResource->Release();
 
-	//tex.Resource->Release();
-	//
-	Resource;
-	tex;
+    tex.Resource->Release();
+	
 }

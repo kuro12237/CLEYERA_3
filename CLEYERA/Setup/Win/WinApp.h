@@ -20,13 +20,13 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg
 
 
 
-class WindowsSetup
+class WinApp
 {
 public:
-	WindowsSetup();
-	~WindowsSetup();
+	WinApp();
+	~WinApp();
 
-	static WindowsSetup* GetInstance();
+	static WinApp* GetInstance();
 
 	/// <summary>
 	/// ウインドウの表示・初期化
@@ -39,13 +39,13 @@ public:
 	///ウインドウメッセージ処理 
 	/// </summary>
 	/// <param name="msg"></param>
-	static void WinMSG(MSG& msg);
+	static void Msg(MSG& msg);
 
 
 	/// <summary>
 	/// Close
 	/// </summary>
-	static void Deleate();
+	static void Finalize();
 
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

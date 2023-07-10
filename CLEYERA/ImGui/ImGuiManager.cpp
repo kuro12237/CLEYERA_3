@@ -6,7 +6,7 @@ ImGuiManager::ImGuiManager()
 {
 }
 
-void ImGuiManager::Initialize(WindowsSetup* WinSetup_, DirectXSetup* DXSetup_)
+void ImGuiManager::Initialize(WinApp* WinSetup_, DirectXSetup* DXSetup_)
 {
 
 	IMGUI_CHECKVERSION();
@@ -45,7 +45,7 @@ void ImGuiManager::EndFlame(DirectXSetup* DXSetup_)
 
 }
 
-void ImGuiManager::Release()
+void ImGuiManager::Finalize()
 {
 	ImGui_ImplDX12_Shutdown();
 }

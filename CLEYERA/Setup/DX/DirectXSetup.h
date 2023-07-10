@@ -66,7 +66,7 @@ public:
 	/// <summary>
 	/// DXGIファクトリーの作成
 	/// </summary>
-	static void CreateDXGIFactorye();
+	static void CreateDxgiFactory();
 
 	/// <summary>
 	/// デバイスの作成
@@ -109,7 +109,12 @@ public:
 	static void CreateFence();
 
 
-	 ID3D12Device* GetDevice() { return device; }
+
+
+
+#pragma region ゲッター
+
+	 ID3D12Device* GetDevice() { return device_; }
 	 Commands GetCommands() { return commands; }
 
 	 DXGI_SWAP_CHAIN_DESC1 GeSwapChainDesc() { return swapChainDesc; }
@@ -118,26 +123,17 @@ public:
 
 	 ID3D12DescriptorHeap* GetSrvDescripterHeap() { return srvDescriptorHeap; }
 
-	/// <summary>
-	/// DirectXの解放
-	/// </summary>
-	static void Release();
-
-	
-
-
-#pragma region Releaseに書く処理
-
-
-	static void FeanceReleace(ID3D12Fence* fence, HANDLE fenceEvent);
-
-	static void DescripterRelease(RTV rtv, ID3D12DescriptorHeap* srvDescriptorHeap);
-	
-	static void SwapChainRelease(SwapChain swapChain);
-
-	static void CommandsRelease(Commands commands);
 #pragma endregion 
+	
+	 /// <summary>
+     /// DirectXの解放
+     /// </summary>
+	 static void Finalize();
 
+
+	/// <summary>
+	/// リリースチェック
+	/// </summary>
 	static void ReleaseChack();
 
 
@@ -148,20 +144,6 @@ public:
 
 	static void ScissorViewCommand(const int32_t kClientWidth, const int32_t kClientHeight);
 
-	/// <summary>
-	/// ビューポートの設定
-	/// </summary>
-	/// <param name="kClientWidth"></param>
-	/// <param name="kClientHeight"></param>
-	/// <returns></returns>
-	static D3D12_VIEWPORT viewportSetting(int32_t kClientWidth, int32_t kClientHeight);
-
-	/// <summary>
-	/// シザーの設定
-	/// </summary>
-	static D3D12_RECT scissorRectSetting(int32_t kClientWidth, int32_t kClientHeight);
-
-
 	static void EndFlame();
 
 
@@ -169,20 +151,44 @@ public:
 
 private:
 
+#pragma region Finalizeに書く処理
+
+
+	static void FeanceReleace(ID3D12Fence* fence, HANDLE fenceEvent);
+
+	static void DescripterRelease(RTV rtv, ID3D12DescriptorHeap* srvDescriptorHeap);
+
+	static void SwapChainRelease(SwapChain swapChain);
+
+	static void CommandsRelease(Commands commands);
+#pragma endregion 
+
+#pragma region ScissorViewCommandに書く処理
+	/// <summary>
+    /// ビューポートの設定
+    /// </summary>
+    /// <param name="kClientWidth"></param>
+    /// <param name="kClientHeight"></param>
+    /// <returns></returns>
+	static D3D12_VIEWPORT viewportSetting(int32_t kClientWidth, int32_t kClientHeight);
+
+	/// <summary>
+	/// シザーの設定
+	/// </summary>
+	static D3D12_RECT scissorRectSetting(int32_t kClientWidth, int32_t kClientHeight);
+#pragma endregion
+
 	//でバック用
-	ID3D12Debug1* debugController = nullptr;
+	ID3D12Debug1* debugController_ = nullptr;
 
-
-	//
-	HRESULT hr;
-
-	IDXGIFactory7* dxgiFactory = nullptr;
-	IDXGIAdapter4* useAdapter = nullptr;
-    ID3D12Device* device = nullptr;
+	IDXGIFactory7* dxgiFactory_ = nullptr;
+	IDXGIAdapter4* useAdapter_ = nullptr;
+    ID3D12Device* device_ = nullptr;
 
 	Commands commands;
 
 	SwapChain swapChain;
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 
 	//DescriptorHeap
 	RTV rtv;
@@ -195,6 +201,6 @@ private:
 
 	D3D12_RESOURCE_BARRIER barrier{};
 
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
+	
 };
 

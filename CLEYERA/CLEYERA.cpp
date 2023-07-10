@@ -1,20 +1,23 @@
 #include"CLEYERA.h"
 
+
 Cleyera::Cleyera()
 {
 }
+
 
 Cleyera::~Cleyera()
 {
 }
 
+
 void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight)
 {
 
 	
-	//WinSetupの初期化
+	//WinAppの初期化
 	
-	WindowsSetup::Initialize(kClientWidth, kClientHeight);
+	WinApp::Initialize(kClientWidth, kClientHeight);
 
 
 	//
@@ -23,10 +26,11 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	
 	///ファクトリー作成
 	
-	DirectXSetup::CreateDXGIFactorye();
+	DirectXSetup::CreateDxgiFactory();
 
 	///デバイス作成
 	DirectXSetup::CreateDevice();
+
 #ifdef _DEBUG
 
 	DirectXSetup::debugErrorInfoQueue();
@@ -37,61 +41,67 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	DirectXSetup::CreateCommands();
 
 	//swapChain
-	DirectXSetup::CreateSwapChain(kClientWidth, kClientHeight, WindowsSetup::GetInstance()->GetHwnd());
+	DirectXSetup::CreateSwapChain(kClientWidth, kClientHeight, WinApp::GetInstance()->GetHwnd());
+	
 	//rtvDescritor
 	DirectXSetup::CreatertvDescritorHeap();
+	
 	//swapChainを引っ張る
 	DirectXSetup::CreateSwapChainResorce();
+	
 	//RTVの設定と作成
 	DirectXSetup::SettingandCreateRTV();
+
 	//フェンスの生成
 	DirectXSetup::CreateFence();
 
-	ImGuiManager::Initialize(WindowsSetup::GetInstance(), DirectXSetup::GetInstance());
+	ImGuiManager::Initialize(WinApp::GetInstance(), DirectXSetup::GetInstance());
 
 	TexManager::Initialize();
 
 	///モデルの初期化
 
 	//DXでつくったものを転送
-	//model->SetDevice(DXSetup->GetDevice());
-	//model->SetCommands(DXSetup->GetCommands());
+	
+	Model::SetDevice(DirectXSetup::GetInstance()->GetDevice());
+	Model::SetCommands(DirectXSetup::GetInstance()->GetCommands());
 
 	//DXCの初期化
-	//model->dxcInitialize();
+	Model::dxcInitialize();
 	//Compileするための対応処理
-	//model->InitializeDfIncludeHandler();
-	
 
+	Model::InitializeDfIncludeHandler();
 
 	///シェーダーコンパイル処理
-	//model->CompileShaders();
-
+	Model::CompileShaders();
+	
 	//図形描画のパイプライン
-	//model->ShapeCreatePSO();
+	Model::ShapeCreatePSO();
+	
+	//Tex描画のパイプライン
+	Model::SpriteCreatePSO();
 
-	//描画のパイプライン
-	//model->SpriteCreatePSO();
-
-	//model->ShaderRelease();
-
+	//コンパイルしたシェーダーの解放
+	Model::ShaderRelease();
 	
 }
 
 
 void Cleyera::WinMSG(MSG msg)
 {
-	
-	WindowsSetup::WinMSG(msg);
+	WinApp::Msg(msg);
 }
+
 
 void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight)
 {
 	ImGuiManager::BeginFlame(DirectXSetup::GetInstance());
+
 	DirectXSetup::BeginFlame();
 	DirectXSetup::ScissorViewCommand(kClientWidth, kClientHeight);
 
 }
+
 
 void Cleyera::EndFlame()
 {
@@ -102,15 +112,16 @@ void Cleyera::EndFlame()
 
 void Cleyera::Finalize()
 {
-	ImGuiManager::Release();
+	ImGuiManager::Finalize();
 	TexManager::Finalize();
-	DirectXSetup::Release();
-	//model->Release();
-	WindowsSetup::Deleate();
+	DirectXSetup::Finalize();
+	Model::Finalize();
+	WinApp::Finalize();
 	DirectXSetup::ReleaseChack();
 
 
 }
+
 
 texResourceProperty Cleyera::LoadTex(const std::string& filePath)
 {
@@ -120,26 +131,20 @@ texResourceProperty Cleyera::LoadTex(const std::string& filePath)
 
 	return tex;
 }
-/*
+
+
 ResourcePeroperty Cleyera::CreateSpriteResource()
 {
 	ResourcePeroperty ResultResource;
-
-	ResultResource = model->CreateSpriteResource();
+	
+	ResultResource = Model::CreateSpriteResource();
 	return ResultResource;
 }
 
+
 void Cleyera::SpriteTriangleResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
 {
-
-	Resource.Vertex->Release();
-    Resource.Material->Release(); 
-    Resource.wvpResource->Release();
-
-    tex.Resource->Release();
-	//model->SpriteResourceRelease(Resource, tex);
-	//Resource;
-	//tex;
+	Model::SpriteResourceRelease(Resource, tex);
 }
 
 
@@ -147,30 +152,24 @@ void Cleyera::SpriteTriangleResourceRelease(ResourcePeroperty &Resource, texReso
 ResourcePeroperty  Cleyera::CreateShapeResource()
 {
 	ResourcePeroperty resultResource;
-	resultResource=model->CreateShapeResource();
+	resultResource=Model::GetInstance()->CreateShapeResource();
 	return resultResource;
 }
 
+
 void Cleyera::TriangleResourceRelease(ResourcePeroperty Resource)
 {
-	model->ShapeResourceRelease(Resource);
-
-
+	Model::ShapeResourceRelease(Resource);
 }
+
 
 void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ResourcePeroperty Resource)
 {
-	model->ShapeDraw(position, ColorCode,worldTransform, Resource);
-
+	Model::ShapeDraw(position, ColorCode,worldTransform, Resource);
 }
+
 
 void Cleyera::SpriteTriangleDraw(Position position, unsigned int color, Matrix4x4 worldTransform, ResourcePeroperty Resource, texResourceProperty tex)
 {
-
-	model->SpriteDraw(position, color, worldTransform, Resource, tex);
-
+	Model::SpriteDraw(position, color, worldTransform, Resource, tex);
 }
-
-
-
-*/

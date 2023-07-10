@@ -1,7 +1,7 @@
 #pragma once
 
 #include"../Setup/DX/DirectXSetup.h"
-#include"../Setup/Win/WinSetup.h"
+#include"../Setup/Win/WinApp.h"
 #include "/CLEYERA_3/CLEYERA/externals/imgui/imgui.h"
 
 #include "/CLEYERA_3/CLEYERA/externals/imgui/imgui_impl_dx12.h"
@@ -16,7 +16,7 @@ public:
 	ImGuiManager();
 	~ImGuiManager();
 
-	static void Initialize(WindowsSetup* WinSetup_, DirectXSetup* DXSetup_);
+	static void Initialize(WinApp* WinSetup_, DirectXSetup* DXSetup_);
 
 
 	static void BeginFlame(DirectXSetup* DXSetup_);
@@ -24,7 +24,7 @@ public:
 
 	static void EndFlame(DirectXSetup* DXSetup_);
 
-	static void Release();
+	static void Finalize();
 private:
 
 };
