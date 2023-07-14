@@ -13,12 +13,9 @@ Cleyera::~Cleyera()
 
 void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight)
 {
-
-	
 	//WinApp‚Ì‰Šú‰»
 	
 	WinApp::Initialize(kClientWidth, kClientHeight);
-
 
 	//
 	////DirectX‚Ì‰Šú‰»
@@ -117,8 +114,8 @@ void Cleyera::Finalize()
 	DirectXSetup::Finalize();
 	Model::Finalize();
 	WinApp::Finalize();
-	DirectXSetup::ReleaseChack();
 
+	DirectXSetup::ReleaseChack();
 
 }
 

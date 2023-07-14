@@ -1,9 +1,5 @@
 #include"TexManager.h"
 
-
-
-
-
 TexManager::TexManager()
 {
 }

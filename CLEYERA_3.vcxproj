@@ -144,6 +144,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CLEYERA\CLEYERA.cpp" />
+    <ClCompile Include="CLEYERA\DX\DirectXSetup.cpp" />
     <ClCompile Include="CLEYERA\externals\imgui\imgui.cpp" />
     <ClCompile Include="CLEYERA\externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="CLEYERA\externals\imgui\imgui_draw.cpp" />
@@ -155,13 +156,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="CLEYERA\Log\Log.cpp" />
     <ClCompile Include="CLEYERA\Matrix\MatrixTransform.cpp" />
     <ClCompile Include="CLEYERA\Models\Model.cpp" />
-    <ClCompile Include="CLEYERA\Setup\DX\DirectXSetup.cpp" />
-    <ClCompile Include="CLEYERA\Setup\Win\WinApp.cpp" />
     <ClCompile Include="CLEYERA\TexManager\TexManager.cpp" />
+    <ClCompile Include="CLEYERA\Win\WinApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\CLEYERA.h" />
+    <ClInclude Include="CLEYERA\DX\DirectXSetup.h" />
     <ClInclude Include="CLEYERA\externals\imgui\imconfig.h" />
     <ClInclude Include="CLEYERA\externals\imgui\imgui.h" />
     <ClInclude Include="CLEYERA\externals\imgui\imgui_impl_dx12.h" />
@@ -177,12 +178,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="CLEYERA\Matrix\Matrix4x4.h" />
     <ClInclude Include="CLEYERA\Matrix\MatrixTransform.h" />
     <ClInclude Include="CLEYERA\Models\Model.h" />
-    <ClInclude Include="CLEYERA\Setup\DX\DirectXSetup.h" />
-    <ClInclude Include="CLEYERA\Setup\Win\WinApp.h" />
     <ClInclude Include="CLEYERA\TexManager\TexManager.h" />
     <ClInclude Include="CLEYERA\Vector\Vector2.h" />
     <ClInclude Include="CLEYERA\Vector\Vector3.h" />
     <ClInclude Include="CLEYERA\Vector\Vector4.h" />
+    <ClInclude Include="CLEYERA\Win\WinApp.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\config\.editorconfig" />

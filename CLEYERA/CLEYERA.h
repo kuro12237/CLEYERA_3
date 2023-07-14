@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include<format>
-#include"Setup/Win/WinApp.h"
-#include"Setup/DX/DirectXSetup.h"
+#include"Win/WinApp.h"
+#include"DX/DirectXSetup.h"
 
 #include"Models/Model.h"
 #include"TexManager/TexManager.h"

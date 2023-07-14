@@ -1,14 +1,9 @@
 #pragma once
-
-#include"../Setup/DX/DirectXSetup.h"
-#include"../Setup/Win/WinApp.h"
-#include "/CLEYERA_3/CLEYERA/externals/imgui/imgui.h"
-
-#include "/CLEYERA_3/CLEYERA/externals/imgui/imgui_impl_dx12.h"
-
-#include "/CLEYERA_3/CLEYERA/externals/imgui/imgui_impl_win32.h"
-
-
+#include"../DX/DirectXSetup.h"
+#include"../Win/WinApp.h"
+#include"../externals/imgui/imgui.h"
+#include"../externals/imgui/imgui_impl_dx12.h"
+#include"../externals/imgui/imgui_impl_win32.h"
 
 class ImGuiManager
 {
