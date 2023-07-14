@@ -57,9 +57,6 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CLEYERA\Log\Log.cpp">
-      <Filter>CLEYERA\Setup\Log</Filter>
-    </ClCompile>
     <ClCompile Include="CLEYERA\CLEYERA.cpp">
       <Filter>CLEYERA</Filter>
     </ClCompile>
@@ -102,11 +99,11 @@
     <ClCompile Include="CLEYERA\Win\WinApp.cpp">
       <Filter>CLEYERA\Setup\Win</Filter>
     </ClCompile>
+    <ClCompile Include="CLEYERA\LogManager\Log.cpp">
+      <Filter>CLEYERA\Setup\Log</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CLEYERA\Log\Log.h">
-      <Filter>CLEYERA\Setup\Log</Filter>
-    </ClInclude>
     <ClInclude Include="CLEYERA\CLEYERA.h">
       <Filter>CLEYERA</Filter>
     </ClInclude>
@@ -169,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Win\WinApp.h">
       <Filter>CLEYERA\Setup\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\LogManager\Log.h">
+      <Filter>CLEYERA\Setup\Log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

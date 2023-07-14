@@ -2,7 +2,7 @@
 
 #include"../externals/DirectXTex/DirectXTex/d3dx12.h"
 #include"../externals/DirectXTex/DirectXTex/DirectXTex.h"
-#include"../Log/Log.h"
+#include"../LogManager/Log.h"
 #include"../DX/DirectXSetup.h"
 
 
