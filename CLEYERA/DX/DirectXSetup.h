@@ -22,10 +22,7 @@ struct  RTV
 {
 	ID3D12DescriptorHeap* DescritorHeap;
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	//D3D12_DESCRIPTOR_HEAP_DESC rtvDescritorHeapDesc{};
 
-
-	//D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle;
 
 	//RTVを2つ作るのでディスクリプタを2つ用意
@@ -87,7 +84,6 @@ public:
     /// スワップチェーンの設定
     /// </summary>
 	static void CreateSwapChain(const int32_t Width, const int32_t Height, HWND hwnd_);
-
 
 	static ID3D12DescriptorHeap* CreateDescriptorHeap( D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 

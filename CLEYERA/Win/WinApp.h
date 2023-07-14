@@ -6,13 +6,9 @@
 #include<string>
 #include<format>
 
-
-#include "/CLEYERA_3/CLEYERA/externals/imgui/imgui.h"
-
-#include "/CLEYERA_3/CLEYERA/externals/imgui/imgui_impl_dx12.h"
-
-#include "/CLEYERA_3/CLEYERA/externals/imgui/imgui_impl_win32.h"
-
+#include"../externals/imgui/imgui.h"
+#include"../externals/imgui/imgui_impl_dx12.h"
+#include"../externals/imgui/imgui_impl_win32.h"
 
 //#include"Log.h"
 
