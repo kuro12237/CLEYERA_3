@@ -565,6 +565,8 @@ void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 world
 
 }
 
+
+
 void Model::ShapeDrawCommands(Commands commands, ResourcePeroperty Resource,PSOProperty PSO)
 {
 

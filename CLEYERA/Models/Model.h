@@ -188,6 +188,12 @@ public:
 	
 #pragma endregion
 
+#pragma region ‰~
+
+
+
+#pragma endregion
+
 #pragma region ‰æ‘œ•\Ž¦
 
 	static ResourcePeroperty CreateTriangleSpriteResource();
@@ -200,6 +206,11 @@ public:
 
 	static void TriangleSpriteResourceRelease(ResourcePeroperty &Resource,texResourceProperty &tex);
 	
+	static void Triangle3DSpriteDraw(
+		Position position, unsigned int color,
+		Matrix4x4 worldTransform,
+		ResourcePeroperty Resource,
+		texResourceProperty tex);
 #pragma endregion
 
 
