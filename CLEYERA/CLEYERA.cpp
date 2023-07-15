@@ -81,6 +81,8 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//コンパイルしたシェーダーの解放
 	Model::ShaderRelease();
 	
+	//カメラの初期化
+	Camera::Initialize(kClientWidth,kClientHeight);
 }
 
 
@@ -96,7 +98,6 @@ void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight
 
 	DirectXSetup::BeginFlame();
 	DirectXSetup::ScissorViewCommand(kClientWidth, kClientHeight);
-
 }
 
 
@@ -109,10 +110,15 @@ void Cleyera::EndFlame()
 
 void Cleyera::Finalize()
 {
+	Camera::Finalize();
+
 	ImGuiManager::Finalize();
+	
 	TexManager::Finalize();
-	DirectXSetup::Finalize();
+
 	Model::Finalize();
+	DirectXSetup::Finalize();
+	
 	WinApp::Finalize();
 
 	DirectXSetup::ReleaseChack();
@@ -134,14 +140,14 @@ ResourcePeroperty Cleyera::CreateSpriteResource()
 {
 	ResourcePeroperty ResultResource;
 	
-	ResultResource = Model::CreateSpriteResource();
+	ResultResource = Model::CreateTriangleSpriteResource();
 	return ResultResource;
 }
 
 
 void Cleyera::SpriteTriangleResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
 {
-	Model::SpriteResourceRelease(Resource, tex);
+	Model::TriangleSpriteResourceRelease(Resource, tex);
 }
 
 
@@ -162,11 +168,12 @@ void Cleyera::TriangleResourceRelease(ResourcePeroperty Resource)
 
 void Cleyera::TriangleDraw(Position position, unsigned int ColorCode, Matrix4x4 worldTransform, ResourcePeroperty Resource)
 {
-	Model::ShapeDraw(position, ColorCode,worldTransform, Resource);
+	Matrix4x4 m = Camera::worldViewProjectionMatrixFanc(worldTransform);
+	Model::ShapeDraw(position, ColorCode,m, Resource);
 }
 
 
 void Cleyera::SpriteTriangleDraw(Position position, unsigned int color, Matrix4x4 worldTransform, ResourcePeroperty Resource, texResourceProperty tex)
 {
-	Model::SpriteDraw(position, color, worldTransform, Resource, tex);
+	Model::TriangleSpriteDraw(position, color, worldTransform, Resource, tex);
 }

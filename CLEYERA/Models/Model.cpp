@@ -517,7 +517,7 @@ Vector4 Model::ColorCodeAdapter(unsigned int color)
 
 }
 
-ResourcePeroperty Model::CreateSpriteResource()
+ResourcePeroperty Model::CreateTriangleSpriteResource()
 {
 	ResourcePeroperty resultResource;
 	ID3D12Device* device = Model::GetInstance()->device;
@@ -541,8 +541,6 @@ void Model::ShapeDraw(Position position, unsigned int ColorCode, Matrix4x4 world
 	Resource.Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	Resource.Material->Map(0, nullptr, reinterpret_cast<void**>(&MaterialData));
 	Resource.wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
-
-	
 
 	//À•W
 	//¶‰º
@@ -603,7 +601,7 @@ void Model::ShapeResourceRelease(ResourcePeroperty Resource)
 
 
 
-void Model::SpriteDraw(Position position, unsigned int color, Matrix4x4 worldTransform, ResourcePeroperty Resource, texResourceProperty tex)
+void Model::TriangleSpriteDraw(Position position, unsigned int color, Matrix4x4 worldTransform, ResourcePeroperty Resource, texResourceProperty tex)
 {
 
 	VertexData* vertexData = nullptr;
@@ -685,7 +683,7 @@ void Model::FancShaderRelease(Mode shader)
 
 }
 
-void Model::SpriteResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
+void Model::TriangleSpriteResourceRelease(ResourcePeroperty &Resource, texResourceProperty &tex)
 {
 
 	Resource.Vertex->Release();

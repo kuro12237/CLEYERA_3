@@ -1,6 +1,265 @@
 #include "MatrixTransform.h"
 
+
+#pragma region 三次元行列
+
+#pragma region +-*
+
+Matrix3x3 MatrixTransform::Add(const Matrix3x3& m1, const Matrix3x3& m2)
+{
+	Matrix3x3 result;
+
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 3; col++) {
+			result.m[row][col] = m1.m[row][col] + m2.m[row][col];
+		}
+	}
+
+	return result;
+}
+
+Matrix3x3 MatrixTransform::Subract(const Matrix3x3& m1, const Matrix3x3& m2)
+{
+	Matrix3x3 result;
+
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 3; col++) {
+			result.m[row][col] = m1.m[row][col] - m2.m[row][col];
+		}
+	}
+
+	return result;
+}
+
+Matrix3x3 MatrixTransform::Multiply(const Matrix3x3& m1, const Matrix3x3& m2)
+{
+	Matrix3x3 result;
+
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 3; col++) {
+			result.m[row][col] = 0.0f;
+
+			for (int k = 0; k < 3; k++) {
+				result.m[row][col] += m1.m[row][k] * m2.m[k][col];
+			}
+		}
+	}
+
+	return result;
+}
+
+
+
+#pragma endregion 
+
+#pragma region 移動・回転・大きさ
+
+Matrix3x3 MatrixTransform::MakeTranslate3x3Matrix(Vector2 translate)
+{
+	Matrix3x3 result;
+
+	result.m[0][0] = 1.0f;
+	result.m[0][1] = 0.0f;
+	result.m[0][2] = 0.0f;
+
+	result.m[1][0] = 0.0f;
+	result.m[1][1] = 1.0f;
+	result.m[1][2] = 0.0f;
+
+	result.m[2][0] = translate.x;
+	result.m[2][1] = translate.y;
+	result.m[2][2] = 1.0f;
+	return result;
+
+}
+
+Matrix3x3 MatrixTransform::MakeRotate3x3Matrix(float theta)
+{
+	Matrix3x3 result;
+
+	result.m[0][0] = std::cosf(theta);
+	result.m[0][1] = std::sinf(theta);
+	result.m[0][2] = 0.0f;
+
+	result.m[1][0] = -std::sinf(theta);
+	result.m[1][1] = std::cosf(theta);
+	result.m[1][2] = 0.0f;
+
+	result.m[2][0] = 0.0f;
+	result.m[2][1] = 0.0f;
+	result.m[2][2] = 1.0f;
+	return result;
+}
+
+Matrix3x3 MatrixTransform::MakeScaleMatrix(const Vector2 scale)
+{
+	Matrix3x3 result;
+	result.m[0][0] = scale.x;
+	result.m[0][1] = 0.0f;
+	result.m[0][2] = 0.0f;
+
+
+	result.m[1][0] = 0.0f;
+	result.m[1][1] = scale.y;
+	result.m[1][2] = 0.0f;
+
+
+	result.m[2][0] = 0.0f;
+	result.m[2][1] = 0.0f;
+	result.m[2][2] = 0.0f;
+
+
+	return result;
+}
+
+#pragma endregion
+
+#pragma region 行列変換
+
+Matrix3x3 MatrixTransform::MakeAffineMatrix(const Vector2 translate, float radian, const Vector2 scale)
+{
+	Matrix3x3 result;
+
+	//S
+	Matrix3x3 scaleMatrix;
+	scaleMatrix = MakeScaleMatrix(scale);
+	//R
+	Matrix3x3 rotateMatrix;
+	rotateMatrix = MakeRotate3x3Matrix(radian);
+	//T
+	Matrix3x3 translateMatrix;
+	translateMatrix = MakeTranslate3x3Matrix(translate);
+
+	result = Multiply(Multiply(scaleMatrix, rotateMatrix), translateMatrix);
+
+	return result;
+}
+
+Vector2 MatrixTransform::Transform(Vector2 v, Matrix3x3 matrix)
+{
+	Vector2 result;
+	result.x = v.x * matrix.m[0][0] + v.y * matrix.m[1][0] + 1.0f * matrix.m[2][0];
+	result.y = v.x * matrix.m[0][1] + v.y * matrix.m[1][1] + 1.0f * matrix.m[2][1];
+	float w = v.x * matrix.m[0][2] + v.y * matrix.m[1][2] + 1.0f * matrix.m[2][2];
+	assert(w != 0.0f);
+	result.x /= w;
+	result.y /= w;
+	return result;
+}
+
+Matrix3x3 MatrixTransform::Inverse(Matrix3x3 matrix)
+{
+	Matrix3x3 result;
+
+	float determinant =
+		matrix.m[0][0] * matrix.m[1][1] * matrix.m[2][2] +
+
+		matrix.m[0][1] * matrix.m[1][2] * matrix.m[2][0] +
+		matrix.m[0][2] * matrix.m[1][0] * matrix.m[2][1] -
+		matrix.m[0][2] * matrix.m[1][1] * matrix.m[2][0] -
+		matrix.m[0][1] * matrix.m[1][0] * matrix.m[2][2] -
+		matrix.m[0][0] * matrix.m[1][2] * matrix.m[2][1];
+	assert(determinant != 0.0f);
+	float determinantRecp = 1.0f / determinant;
+
+	result.m[0][0] =
+		(matrix.m[1][1] * matrix.m[2][2] - matrix.m[1][2] * matrix.m[2][1]) * determinantRecp;
+	result.m[0][1] =
+		-(matrix.m[0][1] * matrix.m[2][2] - matrix.m[0][2] * matrix.m[2][1]) * determinantRecp;
+	result.m[0][2] =
+		(matrix.m[0][1] * matrix.m[1][2] - matrix.m[0][2] * matrix.m[1][1]) * determinantRecp;
+
+
+	result.m[1][0] =
+		-(matrix.m[1][0] * matrix.m[2][2] - matrix.m[1][2] * matrix.m[2][0]) * determinantRecp;
+	result.m[1][1] =
+		(matrix.m[0][0] * matrix.m[2][2] - matrix.m[0][2] * matrix.m[2][0]) * determinantRecp;
+	result.m[1][2] =
+		-(matrix.m[0][0] * matrix.m[1][2] - matrix.m[0][2] * matrix.m[1][0]) * determinantRecp;
+
+
+	result.m[2][0] =
+		(matrix.m[1][0] * matrix.m[2][1] - matrix.m[1][1] * matrix.m[2][0]) * determinantRecp;
+	result.m[2][1] =
+		-(matrix.m[0][0] * matrix.m[2][1] - matrix.m[0][1] * matrix.m[2][0]) * determinantRecp;
+	result.m[2][2] =
+		(matrix.m[0][0] * matrix.m[1][1] - matrix.m[0][1] * matrix.m[1][0]) * determinantRecp;
+
+	return result;
+}
+
+Matrix3x3 MatrixTransform::Transpose(Matrix3x3 matrix)
+{
+	Matrix3x3 result;
+
+	result.m[0][0] = matrix.m[0][0];
+	result.m[0][1] = matrix.m[1][0];
+	result.m[0][2] = matrix.m[2][0];
+
+	result.m[1][0] = matrix.m[0][1];
+	result.m[1][1] = matrix.m[1][1];
+	result.m[1][2] = matrix.m[2][1];
+
+	result.m[2][0] = matrix.m[0][2];
+	result.m[2][1] = matrix.m[1][2];
+	result.m[2][2] = matrix.m[2][2];
+	return result;
+
+
+}
+
+Matrix3x3 MatrixTransform::MakeOrthographicMatrix(float left, float top, float right, float bottom)
+{
+	assert(left != right);
+	assert(top != bottom);
+	Matrix3x3 result;
+
+	result.m[0][0] = 2.0f / (right - left);//
+	result.m[0][1] = 0.0f;
+	result.m[0][2] = 0.0f;
+
+	result.m[1][0] = 0.0f;
+	result.m[1][1] = 2.0f / (top - bottom);//
+	result.m[1][2] = 0.0f;
+
+	result.m[2][0] = (left + right) / (left - right);//
+	result.m[2][1] = (top + bottom) / (bottom - top);//
+	result.m[2][2] = 1.0f;
+
+	return result;
+
+}
+
+Matrix3x3 MatrixTransform::MakeviewportMatrix(float left, float top, float width, float height)
+{
+	Matrix3x3 result;
+
+	result.m[0][0] = width / 2.0f;
+	result.m[0][1] = 0.0f;
+	result.m[0][2] = 0.0f;
+
+	result.m[1][0] = 0.0f;
+	result.m[1][1] = -height / 2.0f;
+	result.m[1][2] = 0.0f;
+
+	result.m[2][0] = left + (width / 2.0f);
+	result.m[2][1] = top + (height / 2.0f);
+	result.m[2][2] = 1.0f;
+
+	return result;
+
+}
+
+
+#pragma endregion
+
+#pragma endregion 
+
 MatrixTransform::MatrixTransform()
+{
+}
+
+MatrixTransform::~MatrixTransform()
 {
 }
 

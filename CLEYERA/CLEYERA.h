@@ -7,6 +7,7 @@
 #include"TexManager/TexManager.h"
 
 #include"ImGui/ImGuiManager.h"
+#include"Camera/Camera.h"
 
 struct Triangle
 {

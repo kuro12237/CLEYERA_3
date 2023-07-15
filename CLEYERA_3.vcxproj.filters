@@ -19,9 +19,6 @@
     <Filter Include="CLEYERA\Setup">
       <UniqueIdentifier>{b4e1bbba-605e-49a6-b770-8e31d4e2c065}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CLEYERA\Setup\Log">
-      <UniqueIdentifier>{d23767cf-4c72-47a1-a0b7-447bf7828484}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CLEYERA\Setup\Win">
       <UniqueIdentifier>{fbf39094-dadc-4735-bfcf-ecfd0db1b8f8}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,12 @@
     </Filter>
     <Filter Include="CLEYERA\ImGuiSetup\ImGui">
       <UniqueIdentifier>{b9cf4fac-87ae-40a7-9cb5-7eb14a839dce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Log">
+      <UniqueIdentifier>{d23767cf-4c72-47a1-a0b7-447bf7828484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Camera">
+      <UniqueIdentifier>{ec2e98ce-04ed-476f-9b6b-78ce202317ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +103,13 @@
       <Filter>CLEYERA\Setup\Win</Filter>
     </ClCompile>
     <ClCompile Include="CLEYERA\LogManager\Log.cpp">
-      <Filter>CLEYERA\Setup\Log</Filter>
+      <Filter>CLEYERA\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Camera\Camera.cpp">
+      <Filter>CLEYERA\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Vector\VectorTransform.cpp">
+      <Filter>CLEYERA\Vector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +177,13 @@
       <Filter>CLEYERA\Setup\Win</Filter>
     </ClInclude>
     <ClInclude Include="CLEYERA\LogManager\Log.h">
-      <Filter>CLEYERA\Setup\Log</Filter>
+      <Filter>CLEYERA\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Camera\Camera.h">
+      <Filter>CLEYERA\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Vector\VectorTransform.h">
+      <Filter>CLEYERA\Vector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

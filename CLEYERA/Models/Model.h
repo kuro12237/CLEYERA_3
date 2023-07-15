@@ -185,19 +185,20 @@ public:
 	/// <param name="Resource"></param>
 	static void ShapeResourceRelease(ResourcePeroperty Resource);
 
+	
 #pragma endregion
 
 #pragma region ‰æ‘œ•\Ž¦
 
-	static ResourcePeroperty CreateSpriteResource();
+	static ResourcePeroperty CreateTriangleSpriteResource();
 
-	static void SpriteDraw(
+	static void TriangleSpriteDraw(
 		Position position, unsigned int color,
 		Matrix4x4 worldTransform,
 		ResourcePeroperty Resource,
 		texResourceProperty tex);
 
-	static void SpriteResourceRelease(ResourcePeroperty &Resource,texResourceProperty &tex);
+	static void TriangleSpriteResourceRelease(ResourcePeroperty &Resource,texResourceProperty &tex);
 	
 #pragma endregion
 
@@ -264,7 +265,7 @@ private:
 	DXCProperty dxc;
 
 	IDxcIncludeHandler* includeHandler = nullptr;
-	Shaders shader;
+	Shaders shader ;
 
 	PSOProperty Shape;
 	PSOProperty Sprite;

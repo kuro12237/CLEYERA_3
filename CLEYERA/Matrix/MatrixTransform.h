@@ -5,17 +5,142 @@
 #include"../Vector/Vector4.h"
 #include"../Vector/Vector3.h"
 
-
+#include"../Vector/Vector2.h"
 
 #include<cmath>
 
 
 #include <cassert>
+
+struct Transform
+{
+	Vector3 Scale;
+	Vector3 rotate;
+	Vector3 translate;
+};
 class MatrixTransform
 {
 public:
 	MatrixTransform();
 	~MatrixTransform();
+
+#pragma region 三次元行列
+#pragma region +-*
+
+	/// <summary>
+	/// 3x3行列の足し算
+	/// </summary>
+	/// <param name="m1"></param>
+	/// <param name="m2"></param>
+	/// <returns></returns>
+	Matrix3x3 Add(const Matrix3x3& m1, const Matrix3x3& m2);
+
+	/// <summary>
+	/// 3x3行列の引き算
+	/// </summary>
+	/// <param name="m1"></param>
+	/// <param name="m2"></param>
+	/// <returns></returns>
+	Matrix3x3 Subract(const Matrix3x3& m1, const Matrix3x3& m2);
+
+
+	/// <summary>
+	/// 3x3行列の掛け算
+	/// </summary>
+	/// <param name="m1"></param>
+	/// <param name="m2"></param>
+	/// <returns></returns>
+	Matrix3x3 Multiply(const Matrix3x3& m1, const Matrix3x3& m2);
+
+
+#pragma endregion 
+
+#pragma region 移動・回転・大きさ
+
+
+
+	/// <summary>
+	/// 3x3行列の平行移動
+	/// </summary>
+	/// <param name="translate"></param>
+	/// <returns></returns>
+	Matrix3x3 MakeTranslate3x3Matrix(Vector2 translate);
+
+	/// <summary>
+	/// 3x3行列回転
+	/// </summary>
+	/// <param name="theta"></param>
+	/// <returns></returns>
+	Matrix3x3 MakeRotate3x3Matrix(float radian);
+
+	/// <summary>
+	/// 3x3行列の大きさ
+	/// </summary>
+	/// <param name="scale"></param>
+	/// <returns></returns>
+	Matrix3x3 MakeScaleMatrix(const Vector2 scale);
+
+
+
+#pragma endregion
+
+#pragma region 行列の変換
+
+	/// <summary>
+	/// 3x3のアフィン変換
+	/// </summary>
+	/// <param name="translate"></param>
+	/// <param name="radian"></param>
+	/// <param name="scale"></param>
+	/// <returns></returns>
+	Matrix3x3 MakeAffineMatrix(const Vector2 translate, float radian, const Vector2 scale);
+
+
+	/// <summary>
+	/// 2次元ベクトルを3x3行列で変換
+	/// </summary>
+	/// <param name="v"></param>
+	/// <param name="matrix"></param>
+	/// <returns></returns>
+	Vector2 Transform(Vector2 v, Matrix3x3 matrix);
+
+	/// <summary>
+	/// 3x3の逆行列
+	/// </summary>
+	/// <param name="matrix"></param>
+	/// <returns></returns>
+	Matrix3x3 Inverse(Matrix3x3 matrix);
+
+	/// <summary>
+	/// 3x3の転置行列
+	/// </summary>
+	/// <param name="matrix"></param>
+	/// <returns></returns>
+	Matrix3x3 Transpose(Matrix3x3 matrix);
+
+	/// <summary>
+	/// 3x3の正射影行列
+	/// </summary>
+	/// <param name="left"></param>
+	/// <param name="top"></param>
+	/// <param name="right"></param>
+	/// <param name="bottom"></param>
+	/// <returns></returns>
+	Matrix3x3 MakeOrthographicMatrix(float left, float top, float right, float bottom);
+
+	/// <summary>
+	/// 3x3ビューポート行列
+	/// </summary>
+	/// <param name="left"></param>
+	/// <param name="top"></param>
+	/// <param name="width"></param>
+	/// <param name="height"></param>
+	/// <returns></returns>
+	Matrix3x3 MakeviewportMatrix(float left, float top, float width, float height);
+#pragma endregion
+
+
+#pragma endregion
 
 #pragma region 4次元
 

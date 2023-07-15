@@ -143,6 +143,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CLEYERA\Camera\Camera.cpp" />
     <ClCompile Include="CLEYERA\CLEYERA.cpp" />
     <ClCompile Include="CLEYERA\DX\DirectXSetup.cpp" />
     <ClCompile Include="CLEYERA\externals\imgui\imgui.cpp" />
@@ -157,10 +158,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="CLEYERA\Matrix\MatrixTransform.cpp" />
     <ClCompile Include="CLEYERA\Models\Model.cpp" />
     <ClCompile Include="CLEYERA\TexManager\TexManager.cpp" />
+    <ClCompile Include="CLEYERA\Vector\VectorTransform.cpp" />
     <ClCompile Include="CLEYERA\Win\WinApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CLEYERA\Camera\Camera.h" />
     <ClInclude Include="CLEYERA\CLEYERA.h" />
     <ClInclude Include="CLEYERA\DX\DirectXSetup.h" />
     <ClInclude Include="CLEYERA\externals\imgui\imconfig.h" />
@@ -182,6 +185,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="CLEYERA\Vector\Vector2.h" />
     <ClInclude Include="CLEYERA\Vector\Vector3.h" />
     <ClInclude Include="CLEYERA\Vector\Vector4.h" />
+    <ClInclude Include="CLEYERA\Vector\VectorTransform.h" />
     <ClInclude Include="CLEYERA\Win\WinApp.h" />
   </ItemGroup>
   <ItemGroup>
