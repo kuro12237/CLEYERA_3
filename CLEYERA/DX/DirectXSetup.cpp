@@ -187,7 +187,7 @@ void DirectXSetup::CreateCommands()
 void DirectXSetup::CreateSwapChain(const int32_t Width, const int32_t Height, HWND hwnd_)
 {
 	DirectXSetup::GetInstance()->swapChain.swapChain = nullptr;
-
+	hwnd_;
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 
 	//スワップチェーンの設定
@@ -199,9 +199,11 @@ void DirectXSetup::CreateSwapChain(const int32_t Width, const int32_t Height, HW
 	swapChainDesc.BufferCount = 2;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
-	
+	HWND hwnd = WinApp::GetHwnd();
+	hwnd;
 	//スワップチェーンの生成
-	HRESULT hr = DirectXSetup::GetInstance()->dxgiFactory_->CreateSwapChainForHwnd(DirectXSetup::GetInstance()->commands.Queue, hwnd_, &swapChainDesc,
+	HRESULT hr = DirectXSetup::GetInstance()->dxgiFactory_->CreateSwapChainForHwnd(DirectXSetup::GetInstance()->commands.Queue,
+		hwnd, &swapChainDesc,
 		nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&DirectXSetup::GetInstance()->swapChain.swapChain));
 	assert(SUCCEEDED(hr));
 

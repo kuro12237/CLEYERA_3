@@ -46,12 +46,16 @@ public:
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	HWND GetHwnd()
+	static HWND GetHwnd()
 	{
-		return hwnd;
+		return WinApp::GetInstance()->hwnd;
 	}
 
-	
+	static WNDCLASS GetWc()
+	{
+		return WinApp::GetInstance()->wc_;
+
+	}
 
 private:
 

@@ -8,6 +8,7 @@
 
 #include"ImGui/ImGuiManager.h"
 #include"Camera/Camera.h"
+//#include"Input/Input.h"
 
 struct Triangle
 {
@@ -45,6 +46,7 @@ public:
 
 	static void BeginFlame(const int32_t  kClientWidth, const int32_t  kClientHeight);
 
+	
 	static void EndFlame();
 		  
 	

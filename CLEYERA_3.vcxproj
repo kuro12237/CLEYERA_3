@@ -154,6 +154,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="CLEYERA\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="CLEYERA\externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="CLEYERA\ImGui\ImGuiManager.cpp" />
+    <ClCompile Include="CLEYERA\Input\Input.cpp" />
     <ClCompile Include="CLEYERA\LogManager\Log.cpp" />
     <ClCompile Include="CLEYERA\Matrix\MatrixTransform.cpp" />
     <ClCompile Include="CLEYERA\Models\Model.cpp" />
@@ -175,6 +176,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="CLEYERA\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="CLEYERA\externals\imgui\imstb_truetype.h" />
     <ClInclude Include="CLEYERA\ImGui\ImGuiManager.h" />
+    <ClInclude Include="CLEYERA\Input\Input.h" />
     <ClInclude Include="CLEYERA\LogManager\Log.h" />
     <ClInclude Include="CLEYERA\Matrix\Matrix2x2.h" />
     <ClInclude Include="CLEYERA\Matrix\Matrix3x3.h" />

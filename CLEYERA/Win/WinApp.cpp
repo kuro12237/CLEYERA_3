@@ -39,7 +39,7 @@ LRESULT CALLBACK WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 
 void WinApp::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeight)
 {
-	WNDCLASS wc_{};
+	WNDCLASS wc_;
 
 	HWND hwnd;
 	//ウインドウプロージャー
@@ -84,7 +84,7 @@ void WinApp::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeigh
 	WinApp::GetInstance()->wc_ = wc_;
 	WinApp::GetInstance()->hwnd = hwnd;
 
-
+	
 }
 
 void WinApp::Msg(MSG& msg)

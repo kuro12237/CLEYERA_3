@@ -52,6 +52,14 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//ÉtÉFÉìÉXÇÃê∂ê¨
 	DirectXSetup::CreateFence();
 
+	//Input
+	//obj
+	//Input::DirectInputObjCreate();
+
+	//key
+	//Input::KeyDeviceCreate();
+
+	//
 	ImGuiManager::Initialize(WinApp::GetInstance(), DirectXSetup::GetInstance());
 
 	TexManager::Initialize();
@@ -98,7 +106,10 @@ void Cleyera::BeginFlame(const int32_t kClientWidth, const int32_t kClientHeight
 
 	DirectXSetup::BeginFlame();
 	DirectXSetup::ScissorViewCommand(kClientWidth, kClientHeight);
+
 }
+
+
 
 
 void Cleyera::EndFlame()

@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="リソース ファイル">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,17 +12,8 @@
     <Filter Include="CLEYERA">
       <UniqueIdentifier>{1f5a0258-12fb-4a33-999e-316c9a41fa8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CLEYERA\Setup">
-      <UniqueIdentifier>{b4e1bbba-605e-49a6-b770-8e31d4e2c065}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CLEYERA\Setup\Win">
-      <UniqueIdentifier>{fbf39094-dadc-4735-bfcf-ecfd0db1b8f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CLEYERA\config">
       <UniqueIdentifier>{68cbbdd4-b854-45dc-a2cb-9161377711e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CLEYERA\Setup\DX">
-      <UniqueIdentifier>{553faec0-e51f-4c38-84c7-a2e6f323e506}</UniqueIdentifier>
     </Filter>
     <Filter Include="CLEYERA\Models">
       <UniqueIdentifier>{3e42a95f-aee4-4ec8-a147-6834e9d5589f}</UniqueIdentifier>
@@ -54,6 +41,18 @@
     </Filter>
     <Filter Include="CLEYERA\Camera">
       <UniqueIdentifier>{ec2e98ce-04ed-476f-9b6b-78ce202317ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Base">
+      <UniqueIdentifier>{b4e1bbba-605e-49a6-b770-8e31d4e2c065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Base\Win">
+      <UniqueIdentifier>{fbf39094-dadc-4735-bfcf-ecfd0db1b8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Base\DX">
+      <UniqueIdentifier>{553faec0-e51f-4c38-84c7-a2e6f323e506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Input">
+      <UniqueIdentifier>{442c43cb-ed59-4857-83b2-c1b44abfb3aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,10 +96,10 @@
       <Filter>CLEYERA\ImGuiSetup</Filter>
     </ClCompile>
     <ClCompile Include="CLEYERA\DX\DirectXSetup.cpp">
-      <Filter>CLEYERA\Setup\DX</Filter>
+      <Filter>CLEYERA\Base\DX</Filter>
     </ClCompile>
     <ClCompile Include="CLEYERA\Win\WinApp.cpp">
-      <Filter>CLEYERA\Setup\Win</Filter>
+      <Filter>CLEYERA\Base\Win</Filter>
     </ClCompile>
     <ClCompile Include="CLEYERA\LogManager\Log.cpp">
       <Filter>CLEYERA\Log</Filter>
@@ -110,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="CLEYERA\Vector\VectorTransform.cpp">
       <Filter>CLEYERA\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Input\Input.cpp">
+      <Filter>CLEYERA\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,10 +173,10 @@
       <Filter>CLEYERA\ImGuiSetup</Filter>
     </ClInclude>
     <ClInclude Include="CLEYERA\DX\DirectXSetup.h">
-      <Filter>CLEYERA\Setup\DX</Filter>
+      <Filter>CLEYERA\Base\DX</Filter>
     </ClInclude>
     <ClInclude Include="CLEYERA\Win\WinApp.h">
-      <Filter>CLEYERA\Setup\Win</Filter>
+      <Filter>CLEYERA\Base\Win</Filter>
     </ClInclude>
     <ClInclude Include="CLEYERA\LogManager\Log.h">
       <Filter>CLEYERA\Log</Filter>
@@ -184,6 +186,9 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Vector\VectorTransform.h">
       <Filter>CLEYERA\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Input\Input.h">
+      <Filter>CLEYERA\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

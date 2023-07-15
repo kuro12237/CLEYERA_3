@@ -13,6 +13,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Cleyera::Initialize(kClientWidth, kClientHeight);
 
+
 #pragma region èâä˙âª
 
 		Triangle triangle[TriangleMax];
@@ -51,6 +52,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	MSG msg{};
 
+	//BYTE key[256];
 
 	while (msg.message!=WM_QUIT)
 	{
@@ -60,6 +62,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		Cleyera::BeginFlame(kClientWidth, kClientHeight);
+		//Input::BeginFlame(key);
 #pragma region çXêVèàóù
 
 	
