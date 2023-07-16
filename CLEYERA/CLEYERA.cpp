@@ -52,6 +52,10 @@ void Cleyera::Initialize(const int32_t  kClientWidth, const int32_t  kClientHeig
 	//ƒtƒFƒ“ƒX‚Ì¶¬
 	DirectXSetup::CreateFence();
 
+	Input::DirectInputObjCreate();
+	Input::KeyDeviceCreate();
+
+
 	ImGuiManager::Initialize(WinApp::GetInstance(), DirectXSetup::GetInstance());
 
 	TexManager::Initialize();

@@ -51,6 +51,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	MSG msg{};
 
+	BYTE key[256] = {0};
 
 	while (msg.message!=WM_QUIT)
 	{
@@ -60,10 +61,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		Cleyera::BeginFlame(kClientWidth, kClientHeight);
+
+		Input::BeginFlame(key);
+
 #pragma region çXêVèàóù
 
-	
+		if (key[DIK_0])
+		{
+			OutputDebugStringA("Hit\n");
+			Cleyera::TriangleDraw(triangle[0].position,
+				triangle[0].Color, triangle[0].matrix,
+				triangle[0].Resources);
 
+		}
+	
+	
 #pragma endregion
 		
 
@@ -73,11 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 		
 
-
-		Cleyera::TriangleDraw(triangle[0].position,
-			triangle[0].Color, triangle[0].matrix,
-			triangle[0].Resources);
-	
+			
 	     
 		Cleyera::SpriteTriangleDraw(
 			triangle[1].position,

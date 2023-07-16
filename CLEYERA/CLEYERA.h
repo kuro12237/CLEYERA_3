@@ -8,6 +8,7 @@
 
 #include"ImGui/ImGuiManager.h"
 #include"Camera/Camera.h"
+#include"input/Input.h"
 
 struct Triangle
 {
