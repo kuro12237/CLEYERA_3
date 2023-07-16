@@ -55,6 +55,9 @@
     <Filter Include="CLEYERA\Camera">
       <UniqueIdentifier>{ec2e98ce-04ed-476f-9b6b-78ce202317ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CLEYERA\Input">
+      <UniqueIdentifier>{602b42be-0d46-4dad-b46c-7baa3f376e46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="CLEYERA\Vector\VectorTransform.cpp">
       <Filter>CLEYERA\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\input\Input.cpp">
+      <Filter>CLEYERA\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Vector\VectorTransform.h">
       <Filter>CLEYERA\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\input\Input.h">
+      <Filter>CLEYERA\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

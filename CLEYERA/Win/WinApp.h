@@ -51,7 +51,10 @@ public:
 		return hwnd;
 	}
 
-	
+	WNDCLASS GetWc()
+	{
+		return wc_;
+	}
 
 private:
 
