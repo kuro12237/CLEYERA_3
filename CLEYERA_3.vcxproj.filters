@@ -58,6 +58,18 @@
     <Filter Include="CLEYERA\Input">
       <UniqueIdentifier>{602b42be-0d46-4dad-b46c-7baa3f376e46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{ef6acd1a-523e-4266-853a-2d16832430d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{83432167-4241-4ce9-9d8e-2c7b3b22cb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\EngineDebug">
+      <UniqueIdentifier>{361a7beb-135e-4ed5-adf5-759b95cd6dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\Title">
+      <UniqueIdentifier>{b940023c-6fcc-4703-adef-f46396772fb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +128,18 @@
     </ClCompile>
     <ClCompile Include="CLEYERA\input\Input.cpp">
       <Filter>CLEYERA\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\GameScene\GameScene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\EngineDebug\EnegineDebug.cpp">
+      <Filter>scene\EngineDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Title\Title.cpp">
+      <Filter>scene\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +217,18 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\input\Input.h">
       <Filter>CLEYERA\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\GameScene\GameScene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Title\Title.h">
+      <Filter>scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\EngineDebug\EngineDebug.h">
+      <Filter>scene\EngineDebug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
