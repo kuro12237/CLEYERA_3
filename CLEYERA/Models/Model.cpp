@@ -55,7 +55,7 @@ IDxcBlob* Model::CompilerShader(
 	IDxcCompiler3* dxcCompiler,
 	IDxcIncludeHandler* includeHandler) {
 	//1.hlslファイルを読む
-	Log(ConvertString(std::format(L"Begin CompileShader,path:{},profile:{}\n", filePath, profile)));
+	//Log(ConvertString(std::format(L"Begin CompileShader,path:{},profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
 	IDxcBlobEncoding* shaderSource = nullptr;
 	HRESULT hr = dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource);
@@ -89,7 +89,7 @@ IDxcBlob* Model::CompilerShader(
 	IDxcBlobUtf8* shaderError = nullptr;
 	shaderResult->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(&shaderError), nullptr);
 	if (shaderError != nullptr && shaderError->GetStringLength() != 0) {
-		Log(shaderError->GetStringPointer());
+		//Log(shaderError->GetStringPointer());
 		assert(false);
 	}
 
@@ -100,7 +100,7 @@ IDxcBlob* Model::CompilerShader(
 	hr = shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr);
 	assert(SUCCEEDED(hr));
 	//成功したログを出す
-	Log(ConvertString(std::format(L"Compile Succeeded,path:{},profile:{}\n", filePath, profile)));
+	//Log(ConvertString(std::format(L"Compile Succeeded,path:{},profile:{}\n", filePath, profile)));
 	//もう使わないリソースを解放
 	shaderSource->Release();
 	shaderResult->Release();
@@ -154,7 +154,7 @@ void Model::ShapeCreatePSO()
 		D3D_ROOT_SIGNATURE_VERSION_1, &Shape.signatureBlob, &Shape.errorBlob);
 	if (FAILED(hr))
 	{
-		Log(reinterpret_cast<char*>(Shape.errorBlob->GetBufferPointer()));
+		//Log(reinterpret_cast<char*>(Shape.errorBlob->GetBufferPointer()));
 		assert(false);
 	}
 

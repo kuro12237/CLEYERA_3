@@ -26,12 +26,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 	Cleyera_->Initialize(kClientWidth,kClientHeight);
 
-	Triangle triangle[1];
+	Triangle triangle[2];
 	triangle[0].position =
 	{ {0.0f,0.5,0.0f},{-0.5f,0.0f,0.0f},{0.5f,0.0f,0.0f } };
 	triangle[0].Resources = Cleyera_->CreateResource();
 	triangle[0].Color = 0xff0000ff;
 	triangle[0].matrix = matrixTransform->Identity();
+
+
+
+	
+	triangle[1].position =
+	{ {0.0f,1.0,0.0f},{-0.5f,0.5f,0.0f},{0.5f,0.5f,0.0f } };
+	triangle[1].Resources = Cleyera_->CreateResource();
+	triangle[1].Color = 0xff0000ff;
+	triangle[1].matrix = matrixTransform->Identity();
 	MSG msg{};
 
 	
@@ -51,6 +60,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Cleyera_->TriangleDraw(triangle[0].position,
 			triangle[0].Color, triangle[0].matrix,
 			triangle[0].Resources);
+
+		Cleyera_->TriangleDraw(triangle[1].position,
+			triangle[1].Color, triangle[1].matrix,
+			triangle[1].Resources);
 
 		Cleyera_->EndFlame();
 	}

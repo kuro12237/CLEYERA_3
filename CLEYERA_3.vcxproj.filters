@@ -51,9 +51,6 @@
     <ClCompile Include="CLEYERA\Setup\Win\WinSetup.cpp">
       <Filter>CLEYERA\Setup\Win</Filter>
     </ClCompile>
-    <ClCompile Include="CLEYERA\Log\Log.cpp">
-      <Filter>CLEYERA\Setup\Log</Filter>
-    </ClCompile>
     <ClCompile Include="CLEYERA\CLEYERA.cpp">
       <Filter>CLEYERA</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
   <ItemGroup>
     <ClInclude Include="CLEYERA\Setup\Win\WinSetup.h">
       <Filter>CLEYERA\Setup\Win</Filter>
-    </ClInclude>
-    <ClInclude Include="CLEYERA\Log\Log.h">
-      <Filter>CLEYERA\Setup\Log</Filter>
     </ClInclude>
     <ClInclude Include="CLEYERA\CLEYERA.h">
       <Filter>CLEYERA</Filter>

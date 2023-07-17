@@ -53,7 +53,7 @@ void DirectXSetup::CreateDXGIFactorye()
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE))
 		{
 
-			Log(ConvertString(std::format(L"Use Adapater:{}\n", adapterDesc.Description)));
+			//Log(ConvertString(std::format(L"Use Adapater:{}\n", adapterDesc.Description)));
 			break;
 		}
 
@@ -88,7 +88,7 @@ void DirectXSetup::CreateDevice()
 		if (SUCCEEDED(hr))
 		{
 
-			Log(std::format("FeatureLevel : {}\n", featureLevelStrings[i]));
+			//Log(std::format("FeatureLevel : {}\n", featureLevelStrings[i]));
 			break;
 
 		}
