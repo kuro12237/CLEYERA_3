@@ -1,8 +1,4 @@
-#include"CLEYERA/CLEYERA.h"
 #include"Game/Game.h"
-
-#define TriangleMax 3
-
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
